@@ -15,7 +15,52 @@ namespace GestorAlquilerVehiculos.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("~/Views/Pages/Index.cshtml");
+        }
+
+        public IActionResult About()
+        {
+            return View("~/Views/Pages/About.cshtml");
+        }
+
+        public IActionResult Blog()
+        {
+            return View("~/Views/Pages/Blog.cshtml");
+        }
+
+        public IActionResult BlogSingle()
+        {
+            return View("~/Views/Pages/BlogSingle.cshtml");
+        }
+
+        public IActionResult Car()
+        {
+            return View("~/Views/Pages/Car.cshtml");
+        }
+
+        public IActionResult CarSingle()
+        {
+            return View("~/Views/Pages/CarSingle.cshtml");
+        }
+
+        public IActionResult Contact()
+        {
+            return View("~/Views/Pages/Contact.cshtml");
+        }
+
+        public IActionResult Main()
+        {
+            return View("~/Views/Pages/Main.cshtml");
+        }
+
+        public IActionResult Pricing()
+        {
+            return View("~/Views/Pages/Pricing.cshtml");
+        }
+
+        public IActionResult Services()
+        {
+            return View("~/Views/Pages/Services.cshtml");
         }
 
         public IActionResult Privacy()

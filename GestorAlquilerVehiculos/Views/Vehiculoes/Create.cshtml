@@ -5,12 +5,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@Url.Content("~/images/bg_3.jpg")');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs">
+                    <span class="mr-2">
+                        <a href="@Url.Action("Index", "Home")">Home <i class="ion-ios-arrow-forward"></i></a>
+                    </span>
+                    <span><a asp-action="Index">Vehículos</a>  <i class="ion-ios-arrow-forward"></i></span>
+                </p>
+                <h1 class="mb-3 bread">Agregar Nuevo Vehículo</h1>
+            </div>
+        </div>
+    </div>
+</section>
 
-<h4>Vehiculo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container">
+<div class="card mx-5 px-5 my-5 bg-primary text-white">
+    <div class="card-body mx-3">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -24,7 +38,7 @@
                 <span asp-validation-for="Modelo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Anio" class="control-label"></label>
+                <label asp-for="Anio" class="control-label">Año</label>
                 <input asp-for="Anio" class="form-control" />
                 <span asp-validation-for="Anio" class="text-danger"></span>
             </div>
@@ -32,36 +46,27 @@
                 <label asp-for="Placa" class="control-label"></label>
                 <input asp-for="Placa" class="form-control" />
                 <span asp-validation-for="Placa" class="text-danger"></span>
+                    @if (!string.IsNullOrEmpty(ViewBag.errorPlaca as string))
+                    {
+                        <p class="text-danger">@ViewBag.errorPlaca</p>
+                }     
             </div>
             <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioPorDia" class="control-label"></label>
+                <label asp-for="PrecioPorDia" class="control-label">Precio por Día</label>
                 <input asp-for="PrecioPorDia" class="form-control" />
                 <span asp-validation-for="PrecioPorDia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagenURL" class="control-label"></label>
+                <label asp-for="ImagenURL" class="control-label">URL de la Imagen</label>
                 <input asp-for="ImagenURL" class="form-control" />
                 <span asp-validation-for="ImagenURL" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FechaRegistro" class="control-label"></label>
-                <input asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-secondary" />
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

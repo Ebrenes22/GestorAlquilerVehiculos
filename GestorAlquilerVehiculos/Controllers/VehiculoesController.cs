@@ -54,8 +54,18 @@ namespace GestorAlquilerVehiculos.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VehiculoID,Marca,Modelo,Anio,Placa,Estado,PrecioPorDia,ImagenURL,FechaRegistro")] Vehiculo vehiculo)
+        public async Task<IActionResult> Create([Bind("VehiculoID,Marca,Modelo,Anio,Placa,Estado,PrecioPorDia,ImagenURL")] Vehiculo vehiculo)
         {
+
+            ModelState.Remove("Reservas");
+            ModelState.Remove("Mantenimientos");
+
+            if (VehiculoExists(vehiculo.Placa))
+            {
+                ViewBag.errorPlaca = "Ya existe un vehiculo con esa placa.";
+                return View(vehiculo);
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(vehiculo);
@@ -102,7 +112,7 @@ namespace GestorAlquilerVehiculos.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VehiculoExists(vehiculo.VehiculoID))
+                    if (!VehiculoExists(vehiculo.Placa))
                     {
                         return NotFound();
                     }
@@ -149,9 +159,9 @@ namespace GestorAlquilerVehiculos.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool VehiculoExists(int id)
+        private bool VehiculoExists(string placa)
         {
-            return _context.Vehiculos.Any(e => e.VehiculoID == id);
+            return _context.Vehiculos.Any(e => e.Placa == placa);
         }
     }
 }

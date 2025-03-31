@@ -12,7 +12,7 @@ namespace GestorAlquilerVehiculos.Models
         [Required, StringLength(50)]
         public string Modelo { get; set; }
 
-        [Range(1900, 2100)]
+        [Range(1900, 2100, ErrorMessage = "El año debe de estar entre 1900 y 2100")]
         public int Anio { get; set; }
 
         [Required, StringLength(20)]

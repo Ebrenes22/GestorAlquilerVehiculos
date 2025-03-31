@@ -16,7 +16,7 @@ namespace GestorAlquilerVehiculos.Models
         public string ContrasenaHash { get; set; }
 
         [Required]
-        [RegularExpression("Cliente|Administrador", ErrorMessage = "Rol inválido")]
+        [RegularExpression("Administrador|Empleado", ErrorMessage = "Rol inválido")]
         public string Rol { get; set; }
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;

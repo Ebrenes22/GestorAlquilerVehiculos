@@ -19,7 +19,7 @@ namespace GestorAlquilerVehiculos.Models
         public string Placa { get; set; }
 
         [Required]
-        [RegularExpression("Disponible|Alquilado|En Mantenimiento", ErrorMessage = "Estado inválido")]
+        [RegularExpression("Disponible|Alquilado|En Mantenimiento|Inactivo", ErrorMessage = "Estado inválido")]
         public string Estado { get; set; } = "Disponible";
 
         [Range(0, 10000)]

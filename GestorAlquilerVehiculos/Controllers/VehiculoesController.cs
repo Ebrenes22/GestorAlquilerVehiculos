@@ -103,6 +103,15 @@ namespace GestorAlquilerVehiculos.Controllers
                 return NotFound();
             }
 
+            if (VehiculoExistsDiffId(vehiculo.Placa, vehiculo.VehiculoID)  )
+            {
+                ViewBag.errorPlaca = "Ya existe otro vehiculo con esa placa.";
+                return View(vehiculo);
+            }
+
+            ModelState.Remove("Reservas");
+            ModelState.Remove("Mantenimientos");
+
             if (ModelState.IsValid)
             {
                 try
@@ -162,6 +171,11 @@ namespace GestorAlquilerVehiculos.Controllers
         private bool VehiculoExists(string placa)
         {
             return _context.Vehiculos.Any(e => e.Placa == placa);
+        }
+
+        private bool VehiculoExistsDiffId(string placa, int id)
+        {
+            return _context.Vehiculos.Any(e => e.Placa == placa && e.VehiculoID != id  );
         }
     }
 }

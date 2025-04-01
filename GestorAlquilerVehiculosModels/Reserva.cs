@@ -7,13 +7,14 @@ namespace GestorAlquilerVehiculos.Models
         public int ReservaID { get; set; }
 
         public int? UsuarioID { get; set; }
-        public Usuario Usuario { get; set; }
+
+        public Usuario? Usuario { get; set; }
 
         public int? ClienteReservaID { get; set; }
-        public ClienteReserva ClienteReserva { get; set; }
+        public ClienteReserva? ClienteReserva { get; set; }
 
         public int VehiculoID { get; set; }
-        public Vehiculo Vehiculo { get; set; }
+        public Vehiculo? Vehiculo { get; set; }
 
         [Required]
         public DateTime FechaInicio { get; set; }
@@ -30,9 +31,9 @@ namespace GestorAlquilerVehiculos.Models
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        public ICollection<Notificacion> Notificaciones { get; set; }
-        public ICollection<EntregaDevolucion> EntregasDevoluciones { get; set; }
-        public ICollection<CargoAdicional> CargosAdicionales { get; set; }
+        public ICollection<Notificacion>? Notificaciones { get; set; }
+        public ICollection<EntregaDevolucion>? EntregasDevoluciones { get; set; }
+        public ICollection<CargoAdicional>? CargosAdicionales { get; set; }
     }
 
 

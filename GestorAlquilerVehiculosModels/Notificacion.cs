@@ -14,7 +14,7 @@ namespace GestorAlquilerVehiculos.Models
 
         public DateTime FechaEnvio { get; set; } = DateTime.Now;
 
-        public bool Leido { get; set; } = false;
+        public bool? Leido {  get; set; }
     }
 
 }

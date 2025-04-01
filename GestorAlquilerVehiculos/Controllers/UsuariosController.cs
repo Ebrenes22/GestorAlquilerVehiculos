@@ -87,17 +87,22 @@ namespace GestorAlquilerVehiculos.Controllers
         // POST: Usuarios/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UsuarioID,NombreCompleto,CorreoElectronico,ContrasenaHash,Rol")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, Usuario usuario)
         {
-            if (id != usuario.UsuarioID) return NotFound();
+            if (id != usuario.UsuarioID)
+                return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
                     var usuarioExistente = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.UsuarioID == id);
-                    if (usuarioExistente != null)
-                        usuario.FechaRegistro = usuarioExistente.FechaRegistro;
+                    if (usuarioExistente == null)
+                        return NotFound();
+
+                    // Mantener los campos que no queremos editar
+                    usuario.ContrasenaHash = usuarioExistente.ContrasenaHash;
+                    usuario.FechaRegistro = usuarioExistente.FechaRegistro;
 
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
@@ -108,7 +113,7 @@ namespace GestorAlquilerVehiculos.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!UsuarioExists(usuario.UsuarioID)) return NotFound();
-                    else throw;
+                    throw;
                 }
             }
 

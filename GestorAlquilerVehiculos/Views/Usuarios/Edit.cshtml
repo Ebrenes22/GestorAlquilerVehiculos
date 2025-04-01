@@ -10,30 +10,27 @@
         <div class="card-body px-5 py-4">
             <h2 class="mb-4 text-center text-dark fw-bold">Editar Usuario</h2>
 
-            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+            <!-- ⚠️ asp-route-id para que llegue bien al POST -->
+            <form asp-action="Edit" asp-route-id="@Model.UsuarioID" method="post" class="needs-validation" novalidate>
                 <input type="hidden" asp-for="UsuarioID" />
+                <input type="hidden" asp-for="ContrasenaHash" />
+                <input type="hidden" asp-for="FechaRegistro" />
 
                 <div class="mb-3">
                     <label asp-for="NombreCompleto" class="form-label">Nombre completo</label>
-                    <input asp-for="NombreCompleto" class="form-control" required />
+                    <input asp-for="NombreCompleto" class="form-control" />
                     <span asp-validation-for="NombreCompleto" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="CorreoElectronico" class="form-label">Correo electrónico</label>
-                    <input asp-for="CorreoElectronico" class="form-control" required />
+                    <input asp-for="CorreoElectronico" class="form-control" />
                     <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
-                </div>
-
-                <div class="mb-3">
-                    <label asp-for="ContrasenaHash" class="form-label">Contraseña</label>
-                    <input asp-for="ContrasenaHash" type="password" class="form-control" required />
-                    <span asp-validation-for="ContrasenaHash" class="text-danger"></span>
                 </div>
 
                 <div class="mb-4">
                     <label asp-for="Rol" class="form-label">Rol</label>
-                    <select asp-for="Rol" class="form-select" required>
+                    <select asp-for="Rol" class="form-select">
                         <option value="">Seleccione un rol</option>
                         <option value="Administrador">Administrador</option>
                         <option value="Empleado">Empleado</option>
@@ -69,8 +66,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
 
     <script>
-        // Validación con SweetAlert
         $('form').on('submit', function (e) {
+            console.log("🟡 Intentando enviar...");
             if (!$(this).valid()) {
                 e.preventDefault();
                 Swal.fire({

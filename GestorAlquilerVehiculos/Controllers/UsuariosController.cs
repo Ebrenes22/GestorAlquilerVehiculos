@@ -20,20 +20,18 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
+            // Mostrar alerta si viene de TempData
+            ViewBag.Success = TempData["Success"]?.ToString();
             return View(await _context.Usuarios.ToListAsync());
         }
 
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-                return NotFound();
+            if (id == null) return NotFound();
 
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.UsuarioID == id);
-
-            if (usuario == null)
-                return NotFound();
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(m => m.UsuarioID == id);
+            if (usuario == null) return NotFound();
 
             return View(usuario);
         }
@@ -49,15 +47,27 @@ namespace GestorAlquilerVehiculos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NombreCompleto,CorreoElectronico,ContrasenaHash,Rol")] Usuario usuario)
         {
+            // Validación de correo único
+            if (await _context.Usuarios.AnyAsync(u => u.CorreoElectronico == usuario.CorreoElectronico))
+            {
+                ModelState.AddModelError("CorreoElectronico", "El correo electrónico ya está registrado.");
+            }
+
+            // Validación de nombre completo único
+            if (await _context.Usuarios.AnyAsync(u => u.NombreCompleto == usuario.NombreCompleto))
+            {
+                ModelState.AddModelError("NombreCompleto", "El nombre de usuario ya existe.");
+            }
+
             if (ModelState.IsValid)
             {
                 usuario.FechaRegistro = DateTime.Now;
-
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
 
-                // Mostrar mensaje SweetAlert en la vista
-                return RedirectToAction(nameof(Create), new { success = true });
+                // Enviar mensaje de éxito
+                TempData["Success"] = "Usuario creado correctamente.";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(usuario);
@@ -66,12 +76,10 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: Usuarios/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-                return NotFound();
+            if (id == null) return NotFound();
 
             var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
-                return NotFound();
+            if (usuario == null) return NotFound();
 
             return View(usuario);
         }
@@ -81,30 +89,27 @@ namespace GestorAlquilerVehiculos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UsuarioID,NombreCompleto,CorreoElectronico,ContrasenaHash,Rol")] Usuario usuario)
         {
-            if (id != usuario.UsuarioID)
-                return NotFound();
+            if (id != usuario.UsuarioID) return NotFound();
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    // Preservar la fecha original
                     var usuarioExistente = await _context.Usuarios.AsNoTracking().FirstOrDefaultAsync(u => u.UsuarioID == id);
                     if (usuarioExistente != null)
                         usuario.FechaRegistro = usuarioExistente.FechaRegistro;
 
                     _context.Update(usuario);
                     await _context.SaveChangesAsync();
+
+                    TempData["Success"] = "Usuario actualizado correctamente.";
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioExists(usuario.UsuarioID))
-                        return NotFound();
-                    else
-                        throw;
+                    if (!UsuarioExists(usuario.UsuarioID)) return NotFound();
+                    else throw;
                 }
-
-                return RedirectToAction(nameof(Index));
             }
 
             return View(usuario);
@@ -113,14 +118,10 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: Usuarios/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-                return NotFound();
+            if (id == null) return NotFound();
 
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(m => m.UsuarioID == id);
-
-            if (usuario == null)
-                return NotFound();
+            var usuario = await _context.Usuarios.FirstOrDefaultAsync(m => m.UsuarioID == id);
+            if (usuario == null) return NotFound();
 
             return View(usuario);
         }
@@ -135,6 +136,7 @@ namespace GestorAlquilerVehiculos.Controllers
                 _context.Usuarios.Remove(usuario);
 
             await _context.SaveChangesAsync();
+            TempData["Success"] = "Usuario eliminado correctamente.";
             return RedirectToAction(nameof(Index));
         }
 

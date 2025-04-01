@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\mariajosevalverdepen\\source\\repos\\gestoralquilervehiculos\\gestoralquilervehiculos\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\mariajosevalverdepen\\source\\repos\\gestoralquilervehiculos\\gestoralquilervehiculos\\views\\usuarios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\views\\usuarios\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\mariajosevalverdepen\\source\\repos\\gestoralquilervehiculos\\gestoralquilervehiculos\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\views\\shared\\_adminlayout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\mariajosevalverdepen\\source\\repos\\gestoralquilervehiculos\\gestoralquilervehiculos\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 596,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -70,7 +70,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "UsuariosController.cs",
               "DocumentMoniker": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Controllers\\UsuariosController.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Controllers\\UsuariosController.cs",
@@ -83,20 +83,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\appsettings.Development.json",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\appsettings.Development.json",
               "ToolTip": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\appsettings.Development.json",
               "RelativeToolTip": "GestorAlquilerVehiculos\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-03-31T22:13:22.266Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Models\\Usuario.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Models\\Usuario.cs",
@@ -109,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Usuarios\\Create.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Usuarios\\Create.cshtml",
@@ -122,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "_AdminLayout.cshtml",
               "DocumentMoniker": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Shared\\_AdminLayout.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Shared\\_AdminLayout.cshtml",
@@ -135,13 +135,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Usuarios\\Index.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Usuarios\\Index.cshtml",
               "ToolTip": "C:\\Users\\mariajosevalverdepen\\source\\repos\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Usuarios\\Index.cshtml",
               "RelativeToolTip": "GestorAlquilerVehiculos\\Views\\Usuarios\\Index.cshtml",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAQwEMAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAgwB8AAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-31T20:37:21.242Z",
               "EditorCaption": ""

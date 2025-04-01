@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\gestoralquilervehiculos\\gestoralquilervehiculosapi\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|solutionrelative:gestoralquilervehiculosapi\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\gestoralquilervehiculos\\gestoralquilervehiculosapi\\controllers\\vehiculoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|solutionrelative:gestoralquilervehiculosapi\\controllers\\vehiculoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\gestoralquilervehiculos\\gestoralquilervehiculosapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|solutionrelative:gestoralquilervehiculosapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB092B1B-8F7A-4C8D-8713-3F41B4CA690C}|GestorAlquilerVehiculosModels\\GestorAlquilerVehiculosModels.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\gestoralquilervehiculos\\gestoralquilervehiculosmodels\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB092B1B-8F7A-4C8D-8713-3F41B4CA690C}|GestorAlquilerVehiculosModels\\GestorAlquilerVehiculosModels.csproj|solutionrelative:gestoralquilervehiculosmodels\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB092B1B-8F7A-4C8D-8713-3F41B4CA690C}|GestorAlquilerVehiculosModels\\GestorAlquilerVehiculosModels.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\gestoralquilervehiculos\\gestoralquilervehiculosmodels\\vehiculo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB092B1B-8F7A-4C8D-8713-3F41B4CA690C}|GestorAlquilerVehiculosModels\\GestorAlquilerVehiculosModels.csproj|solutionrelative:gestoralquilervehiculosmodels\\vehiculo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A52948DA-2A21-4E59-9A7E-C2EF5FD5C58B}|GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\gestoralquilervehiculos\\gestoralquilervehiculosapi\\gestoralquilervehiculosapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}",
@@ -26,58 +38,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 596,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "VehiculosController.cs",
-              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
-              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
-              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
-              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAKMAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T01:41:35.646Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\appsettings.json",
-              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\appsettings.json",
-              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\appsettings.json",
-              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-04-01T01:40:57.793Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GestorAlquilerVehiculosAPI.http",
-              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
-              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
-              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
-              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-04-01T01:40:56.891Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Program.cs",
-              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\Program.cs",
-              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Program.cs",
-              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAHAAAAAAAAAA==",
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosModels\\Usuario.cs",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosModels\\Usuario.cs",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosModels\\Usuario.cs",
+              "RelativeToolTip": "GestorAlquilerVehiculosModels\\Usuario.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-01T01:39:21.686Z",
+              "WhenOpened": "2025-04-01T01:56:23.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Vehiculo.cs",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosModels\\Vehiculo.cs",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosModels\\Vehiculo.cs",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosModels\\Vehiculo.cs",
+              "RelativeToolTip": "GestorAlquilerVehiculosModels\\Vehiculo.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAwwB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T01:56:14.51Z",
               "EditorCaption": ""
             },
             {
@@ -107,6 +93,71 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UsuariosController.cs",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Controllers\\UsuariosController.cs",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\Controllers\\UsuariosController.cs",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Controllers\\UsuariosController.cs",
+              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\Controllers\\UsuariosController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T01:53:55.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "VehiculosController.cs",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
+              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\Controllers\\VehiculosController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T01:41:35.646Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\appsettings.json",
+              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-01T01:40:57.793Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GestorAlquilerVehiculosAPI.http",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
+              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\GestorAlquilerVehiculosAPI.http",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
+              "WhenOpened": "2025-04-01T01:40:56.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Program.cs",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculosAPI\\Program.cs",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\GestorAlquilerVehiculos\\GestorAlquilerVehiculosAPI\\Program.cs",
+              "RelativeToolTip": "GestorAlquilerVehiculosAPI\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-01T01:39:21.686Z",
+              "EditorCaption": ""
             }
           ]
         }

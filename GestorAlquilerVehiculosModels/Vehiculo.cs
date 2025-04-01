@@ -30,8 +30,8 @@ namespace GestorAlquilerVehiculos.Models
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        public ICollection<Reserva> Reservas { get; set; }
-        public ICollection<Mantenimiento> Mantenimientos { get; set; }
+        public ICollection<Reserva>? Reservas { get; set; }
+        public ICollection<Mantenimiento>? Mantenimientos { get; set; }
     }
 
 }

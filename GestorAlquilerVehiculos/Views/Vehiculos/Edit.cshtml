@@ -2,62 +2,73 @@
 
 @{
     ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    List<SelectListItem> estados = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Disponible", Value = "Disponible" },
+        new SelectListItem { Text = "Alquilado", Value = "Alquilado" },
+        new SelectListItem { Text = "En Mantenimiento", Value = "En Mantenimiento" },
+        new SelectListItem { Text = "Inactivo", Value = "Inactivo" }
+    };
 }
 
-<h1>Edit</h1>
+<div class="container mt-5">
+    <div class="card shadow border-0">
+        <div class="card-body px-5 py-4">
+            <h2 class="mb-4 text-center text-dark fw-bold">Editar Vehiculo</h2>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="VehiculoID" />
+                <div class="form-group">
+                    <label asp-for="Marca" class="control-label"></label>
+                    <input asp-for="Marca" class="form-control" />
+                    <span asp-validation-for="Marca" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Modelo" class="control-label"></label>
+                    <input asp-for="Modelo" class="form-control" />
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Anio" class="control-label">Año</label>
+                    <input asp-for="Anio" class="form-control" />
+                    <span asp-validation-for="Anio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Placa" class="control-label"></label>
+                    <input asp-for="Placa" class="form-control" />
+                    <span asp-validation-for="Placa" class="text-danger"></span>
+                    @if (!string.IsNullOrEmpty(ViewBag.errorPlaca as string))
+                    {
+                        <p class="text-danger">@ViewBag.errorPlaca</p>
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="PrecioPorDia" class="control-label">Precio por Día</label>
+                    <input asp-for="PrecioPorDia" class="form-control" />
+                    <span asp-validation-for="PrecioPorDia" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImagenURL" class="control-label">URL de la Imagen</label>
+                    <input asp-for="ImagenURL" class="form-control" />
+                    <span asp-validation-for="ImagenURL" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Estado" class="control-label"></label>
+                    <select class="form-select" asp-for="Estado" asp-items="estados">
+                    </select>
+                    <span asp-validation-for="Estado" class="text-danger"></span>
+                </div>
+                <div class="form-group">
 
-<h4>Vehiculo</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VehiculoID" />
-            <div class="form-group">
-                <label asp-for="Marca" class="control-label"></label>
-                <input asp-for="Marca" class="form-control" />
-                <span asp-validation-for="Marca" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Modelo" class="control-label"></label>
-                <input asp-for="Modelo" class="form-control" />
-                <span asp-validation-for="Modelo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Anio" class="control-label"></label>
-                <input asp-for="Anio" class="form-control" />
-                <span asp-validation-for="Anio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Placa" class="control-label"></label>
-                <input asp-for="Placa" class="form-control" />
-                <span asp-validation-for="Placa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Estado" class="control-label"></label>
-                <input asp-for="Estado" class="form-control" />
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PrecioPorDia" class="control-label"></label>
-                <input asp-for="PrecioPorDia" class="form-control" />
-                <span asp-validation-for="PrecioPorDia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImagenURL" class="control-label"></label>
-                <input asp-for="ImagenURL" class="form-control" />
-                <span asp-validation-for="ImagenURL" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaRegistro" class="control-label"></label>
-                <input asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                    <input asp-for="FechaRegistro" class="form-control" type="hidden" />
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <a asp-action="Index" class="btn btn-outline-secondary">← Volver a la lista</a>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 

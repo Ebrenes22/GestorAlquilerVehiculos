@@ -2,66 +2,69 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Vehiculo</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Marca)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Marca)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Modelo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Modelo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Anio)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Anio)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Placa)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Placa)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Estado)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PrecioPorDia)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PrecioPorDia)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ImagenURL)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImagenURL)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaRegistro)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaRegistro)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.VehiculoID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="container mt-5">
+    <div class="card shadow border-0">
+        <div class="card-body px-5 py-4">
+            <h2 class="mb-4 text-center text-dark fw-bold">Detalles del Vehiculo</h2>
+            <dl class="row fs-5">
+                <dt class="col-sm-4 text-end fw-semibold">
+                    @Html.DisplayNameFor(model => model.Marca)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Marca)
+                </dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    @Html.DisplayNameFor(model => model.Modelo)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Modelo)
+                </dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    Año
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Anio)
+                </dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    @Html.DisplayNameFor(model => model.Placa)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Placa)
+                </dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    @Html.DisplayNameFor(model => model.Estado)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Estado)
+                </dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    Precio por Día
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.PrecioPorDia)
+                </dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    Fecha de Registro
+                </dt>
+                <dd class="col-sm-8">@Model.FechaRegistro.ToString("dd/MM/yyyy")</dd>
+                <dt class="col-sm-4 text-end fw-semibold">
+                    Imagen
+                </dt>
+                <dd class="col-sm-8">
+                    <img src="@Model.ImagenURL" alt="Imagen del Vehiculo" style="width: 250px;" />
+                </dd>
+            </dl>
+        </div>
+        <div class="d-flex justify-content-between mb-2">
+            <a asp-action="Edit" asp-route-id="@Model.VehiculoID" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary">
+                ← Volver
+            </a>
+        </div>
+    </div>
 </div>

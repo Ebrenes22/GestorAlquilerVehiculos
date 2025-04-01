@@ -21,10 +21,9 @@
 
 <section class="ftco-section bg-light">
     <div class="container">
-        <a class="btn btn-secondary py-2 ml-1 my-3" asp-action="Create">Agregar Nuevo Vehiculo</a>
         <div class="row">
             @foreach (var item in Model)
-            {
+            { @if (item.Estado == "Disponible"){
                 <div class="col-md-4">
                     <div class="car-wrap rounded ftco-animate">
                         <div class="img rounded d-flex align-items-end" style="background-image: url('@item.ImagenURL');"></div>
@@ -35,15 +34,15 @@
                                 <p class="price ml-auto">₡@item.PrecioPorDia <span>/día</span></p>
                             </div>
                             <p class="d-flex mb-0 d-block">
-                                @if(item.Estado == "Disponible"){
                                     <a href="#" class="btn btn-primary py-2 mr-1">Reservar</a>
-                                }
+
                                 <a href="/car-single" class="btn btn-secondary py-2 ml-1">Detalles</a>
-                                <a class="btn btn-warning py-2 ml-1" asp-action="Edit" asp-route-id="@item.VehiculoID">Editar</a>
+                               
                             </p>
                         </div>
                     </div>
                 </div>
+                }
             }
         </div>
     </div>

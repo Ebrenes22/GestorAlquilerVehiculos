@@ -68,6 +68,11 @@ namespace GestorAlquilerVehiculos.Controllers
             return View();
         }
 
+        public IActionResult AdminPanel()
+        {
+            return View("~/Views/Pages/AdminPanel.cshtml");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

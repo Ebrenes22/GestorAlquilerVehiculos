@@ -10,30 +10,32 @@
 
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <form asp-action="Create" method="post" class="bg-light p-4 rounded shadow-sm">
-                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <!-- VALIDACIÓN COMPLETA -->
+            <form asp-action="Create" method="post" class="bg-light p-4 rounded shadow-sm needs-validation" novalidate>
+                <!-- MOSTRAR ERRORES EN GENERAL -->
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
 
                 <div class="mb-3">
                     <label asp-for="NombreCompleto" class="form-label">Nombre completo</label>
-                    <input asp-for="NombreCompleto" class="form-control" />
+                    <input asp-for="NombreCompleto" class="form-control" required />
                     <span asp-validation-for="NombreCompleto" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="CorreoElectronico" class="form-label">Correo electrónico</label>
-                    <input asp-for="CorreoElectronico" class="form-control" />
+                    <input asp-for="CorreoElectronico" class="form-control" required />
                     <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="ContrasenaHash" class="form-label">Contraseña</label>
-                    <input asp-for="ContrasenaHash" type="password" class="form-control" />
+                    <input asp-for="ContrasenaHash" type="password" class="form-control" required />
                     <span asp-validation-for="ContrasenaHash" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
                     <label asp-for="Rol" class="form-label">Rol</label>
-                    <select asp-for="Rol" class="form-select">
+                    <select asp-for="Rol" class="form-select" required>
                         <option value="">Seleccione un rol</option>
                         <option value="Administrador">Administrador</option>
                         <option value="Empleado">Empleado</option>
@@ -52,7 +54,26 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <!-- ✅ SweetAlert2 para mostrar mensaje de éxito -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- ✅ jQuery necesario para validaciones -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- ✅ Validaciones unobtrusive de ASP.NET Core -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <!-- ✅ Mostrar SweetAlert si se creó con éxito -->
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Usuario creado!',
+                text: 'El usuario se registró correctamente.',
+                confirmButtonColor: '#198754'
+            });
+        }
+    </script>
 }

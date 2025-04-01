@@ -21,8 +21,8 @@ namespace GestorAlquilerVehiculos.Models
 
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
 
-        public ICollection<Reserva> Reservas { get; set; }
-        public ICollection<Reporte> Reportes { get; set; }
+        // Nullables
+        public virtual ICollection<Reserva>? Reservas { get; set; }
+        public virtual ICollection<Reporte>? Reportes { get; set; }
     }
-
 }

@@ -1,55 +1,85 @@
 ﻿@model GestorAlquilerVehiculos.Models.Usuario
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Editar Usuario";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
+<div class="container mt-5">
+    <div class="card shadow border-0">
+        <div class="card-body px-5 py-4">
+            <h2 class="mb-4 text-center text-dark fw-bold">Editar Usuario</h2>
 
-<h4>Usuario</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UsuarioID" />
-            <div class="form-group">
-                <label asp-for="NombreCompleto" class="control-label"></label>
-                <input asp-for="NombreCompleto" class="form-control" />
-                <span asp-validation-for="NombreCompleto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CorreoElectronico" class="control-label"></label>
-                <input asp-for="CorreoElectronico" class="form-control" />
-                <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContrasenaHash" class="control-label"></label>
-                <input asp-for="ContrasenaHash" class="form-control" />
-                <span asp-validation-for="ContrasenaHash" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rol" class="control-label"></label>
-                <input asp-for="Rol" class="form-control" />
-                <span asp-validation-for="Rol" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="FechaRegistro" class="control-label"></label>
-                <input asp-for="FechaRegistro" class="form-control" />
-                <span asp-validation-for="FechaRegistro" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <form asp-action="Edit" method="post" class="needs-validation" novalidate>
+                <input type="hidden" asp-for="UsuarioID" />
+
+                <div class="mb-3">
+                    <label asp-for="NombreCompleto" class="form-label">Nombre completo</label>
+                    <input asp-for="NombreCompleto" class="form-control" required />
+                    <span asp-validation-for="NombreCompleto" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="CorreoElectronico" class="form-label">Correo electrónico</label>
+                    <input asp-for="CorreoElectronico" class="form-control" required />
+                    <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ContrasenaHash" class="form-label">Contraseña</label>
+                    <input asp-for="ContrasenaHash" type="password" class="form-control" required />
+                    <span asp-validation-for="ContrasenaHash" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Rol" class="form-label">Rol</label>
+                    <select asp-for="Rol" class="form-select" required>
+                        <option value="">Seleccione un rol</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Empleado">Empleado</option>
+                    </select>
+                    <span asp-validation-for="Rol" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-outline-secondary">← Volver</a>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@if (TempData["Success"] != null)
+{
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: '¡Cambios guardados!',
+            text: '@TempData["Success"]',
+            confirmButtonColor: '#198754'
+        });
+    </script>
+}
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script>
+        // Validación con SweetAlert
+        $('form').on('submit', function (e) {
+            if (!$(this).valid()) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error de validación',
+                    text: 'Por favor complete todos los campos correctamente.',
+                    confirmButtonColor: '#dc3545'
+                });
+            }
+        });
+    </script>
 }

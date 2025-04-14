@@ -18,7 +18,7 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: /Auth/Login
         public IActionResult Login()
         {
-            return View();
+            return View(new LoginViewModel());
         }
 
         // POST: /Auth/Login
@@ -27,9 +27,12 @@ namespace GestorAlquilerVehiculos.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
 
             var hashed = PasswordHasher.HashPassword(model.Contrasena);
+
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.CorreoElectronico == model.CorreoElectronico && u.ContrasenaHash == hashed);
 
@@ -38,6 +41,7 @@ namespace GestorAlquilerVehiculos.Controllers
                 TempData["Rol"] = usuario.Rol;
                 TempData["Nombre"] = usuario.NombreCompleto;
                 TempData["Success"] = $"Bienvenido, {usuario.NombreCompleto}";
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -63,8 +67,9 @@ namespace GestorAlquilerVehiculos.Controllers
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
 
-                TempData["Success"] = "Contraseña actualizada correctamente.";
-                return RedirectToAction("Login");
+                // 🟢 Mostrar mensaje y luego redirigir desde la VISTA con JS
+                TempData["PasswordUpdated"] = "Contraseña actualizada correctamente.";
+                return View();
             }
 
             ViewBag.Error = "El correo ingresado no está registrado.";

@@ -1,0 +1,46 @@
+﻿@model GestorAlquilerVehiculos.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="card shadow border-0">
+        <div class="card-body px-5 py-4">
+            <h2 class="text-center text-dark fw-bold mb-4">Panel de Administración</h2>
+
+            <form asp-action="Login" method="post" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label asp-for="CorreoElectronico" class="form-label">Correo electrónico</label>
+                    <input asp-for="CorreoElectronico" class="form-control" required />
+                    <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Contrasena" class="form-label">Contraseña</label>
+                    <input asp-for="Contrasena" type="password" class="form-control" required />
+                    <span asp-validation-for="Contrasena" class="text-danger"></span>
+                </div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.Error</div>
+                }
+
+                <div class="d-grid mb-3">
+                    <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                </div>
+
+                <div class="text-center">
+                    <a href="@Url.Action("Recuperar", "Auth")" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+}

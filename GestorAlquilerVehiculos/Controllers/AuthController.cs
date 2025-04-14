@@ -24,24 +24,25 @@ namespace GestorAlquilerVehiculos.Controllers
         // POST: /Auth/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string correo, string contrasena)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            var hashed = PasswordHasher.HashPassword(contrasena);
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var hashed = PasswordHasher.HashPassword(model.Contrasena);
             var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.CorreoElectronico == correo && u.ContrasenaHash == hashed);
+                .FirstOrDefaultAsync(u => u.CorreoElectronico == model.CorreoElectronico && u.ContrasenaHash == hashed);
 
             if (usuario != null)
             {
-                // Simulación de sesión
                 TempData["Rol"] = usuario.Rol;
                 TempData["Nombre"] = usuario.NombreCompleto;
                 TempData["Success"] = $"Bienvenido, {usuario.NombreCompleto}";
-
-                return RedirectToAction("Index", "Home"); // redirige al panel
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.Error = "Correo o contraseña incorrectos.";
-            return View();
+            return View(model);
         }
 
         // GET: /Auth/CambiarContrasena

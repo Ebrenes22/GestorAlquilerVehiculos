@@ -3,14 +3,20 @@
 @{
     ViewData["Title"] = "Usuarios";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var rolUsuario = TempData["Rol"]?.ToString();
+    TempData.Keep("Rol"); 
 }
 
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="text-dark fw-bold mb-0">Gestión de Usuarios</h2>
-        <a asp-action="Create" class="btn btn-success">
-            <i class="fas fa-plus text-white"></i> Crear Usuario
-        </a>
+
+        @if (rolUsuario == "Administrador")
+        {
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus text-white"></i> Crear Usuario
+            </a>
+        }
     </div>
 
     <div class="table-responsive shadow-sm">
@@ -33,15 +39,24 @@
                         <td>@item.Rol</td>
                         <td>@item.FechaRegistro.ToShortDateString()</td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-warning me-1">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <a asp-action="Details" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-info text-white me-1">
-                                <i class="fas fa-info-circle"></i> Detalles
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-danger">
-                                <i class="fas fa-trash-alt"></i> Eliminar
-                            </a>
+                            @if (rolUsuario == "Administrador")
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-warning me-1">
+                                    <i class="fas fa-edit"></i> Editar
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-info text-white me-1">
+                                    <i class="fas fa-info-circle"></i> Detalles
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash-alt"></i> Eliminar
+                                </a>
+                            }
+                            else if (rolUsuario == "Empleado")
+                            {
+                                <a asp-action="Details" asp-route-id="@item.UsuarioID" class="btn btn-sm btn-info text-white">
+                                    <i class="fas fa-info-circle"></i> Detalles
+                                </a>
+                            }
                         </td>
                     </tr>
                 }
@@ -54,14 +69,34 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Mostrar SweetAlert si TempData contiene el mensaje de éxito
-        const successMessage = '@TempData["Success"]';
+        const successMessage = '@ViewBag.Success';
+        const errorMessage = '@ViewBag.Error';
+        const noPermisos = '@ViewBag.NoPermisos';
+
         if (successMessage) {
             Swal.fire({
                 icon: 'success',
                 title: '¡Éxito!',
                 text: successMessage,
                 confirmButtonColor: '#198754'
+            });
+        }
+
+        if (errorMessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Acceso denegado',
+                text: errorMessage,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+
+        if (noPermisos) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Permiso denegado',
+                text: noPermisos,
+                confirmButtonColor: '#ffc107'
             });
         }
     </script>

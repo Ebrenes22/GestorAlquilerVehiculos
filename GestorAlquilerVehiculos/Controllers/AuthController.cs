@@ -41,8 +41,9 @@ namespace GestorAlquilerVehiculos.Controllers
                 TempData["Rol"] = usuario.Rol;
                 TempData["Nombre"] = usuario.NombreCompleto;
                 TempData["Success"] = $"Bienvenido, {usuario.NombreCompleto}";
+                TempData.Keep();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Usuarios"); // Redirige al panel de usuarios
             }
 
             ViewBag.Error = "Correo o contraseña incorrectos.";
@@ -67,13 +68,19 @@ namespace GestorAlquilerVehiculos.Controllers
                 _context.Update(usuario);
                 await _context.SaveChangesAsync();
 
-                // 🟢 Mostrar mensaje y luego redirigir desde la VISTA con JS
                 TempData["PasswordUpdated"] = "Contraseña actualizada correctamente.";
                 return View();
             }
 
             ViewBag.Error = "El correo ingresado no está registrado.";
             return View();
+        }
+
+        // Cerrar sesión
+        public IActionResult Logout()
+        {
+            TempData.Clear(); // Limpiar toda la sesión simulada
+            return Redirect("https://localhost:7252/");
         }
     }
 }

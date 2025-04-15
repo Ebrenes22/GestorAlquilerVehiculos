@@ -31,10 +31,10 @@
             @{
                 var services = new[]
                 {
-            new { Title = "Ceremonia de Boda", Icon = "flaticon-wedding-car" },
-            new { Title = "Traslado en la Ciudad", Icon = "flaticon-transportation" },
-            new { Title = "Traslado al Aeropuerto", Icon = "flaticon-car" },
-            new { Title = "Tour por la Ciudad", Icon = "flaticon-transportation" }
+            new { Title = "Ceremonia de Boda", Icon = "flaticon-wedding-car", Description = "Servicio elegante y puntual para eventos especiales como bodas." },
+            new { Title = "Traslado en la Ciudad", Icon = "flaticon-transportation", Description = "Movilidad cómoda y rápida dentro de la ciudad con chofer incluido." },
+            new { Title = "Traslado al Aeropuerto", Icon = "flaticon-car", Description = "Viaje seguro y sin contratiempos desde o hacia el aeropuerto." },
+            new { Title = "Tour por la Ciudad", Icon = "flaticon-transportation", Description = "Recorridos turísticos personalizados con nuestros vehículos de lujo." }
             };
 
                 foreach (var service in services)
@@ -46,7 +46,7 @@
                             </div>
                             <div class="text w-100">
                                 <h3 class="heading mb-2">@service.Title</h3>
-                                <p>Un pequeño río llamado Duden pasa por su lugar y les proporciona el regelialia necesario.</p>
+                                <p>@service.Description</p>
                             </div>
                         </div>
                     </div>

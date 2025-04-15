@@ -1,6 +1,6 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Choose Your Car";
+    ViewBag.Title = "Elige tu Vehículo";
 }
 
 <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/images/bg_3.jpg');" data-stellar-background-ratio="0.5">
@@ -8,8 +8,11 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
             <div class="col-md-9 ftco-animate pb-5">
-                <p class="breadcrumbs"><span class="mr-2"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
-                <h1 class="mb-3 bread">Choose Your Car</h1>
+                <p class="breadcrumbs">
+                    <span class="mr-2"><a href="/">Inicio <i class="ion-ios-arrow-forward"></i></a></span>
+                    <span>Vehículos <i class="ion-ios-arrow-forward"></i></span>
+                </p>
+                <h1 class="mb-3 bread">Elige tu Vehículo</h1>
             </div>
         </div>
     </div>
@@ -20,22 +23,22 @@
         <div class="row">
             @for (int i = 1; i <= 12; i++)
             {
-            <div class="col-md-4">
-                <div class="car-wrap rounded ftco-animate">
+                <div class="col-md-4">
+                    <div class="car-wrap rounded ftco-animate">
                         <div class="img rounded d-flex align-items-end" style="background-image: url('@Url.Content("~/images/car-" + i + ".jpg")');"></div>
-                    <div class="text">
-                        <h2 class="mb-0"><a href="/car-single">Mercedes Grand Sedan</a></h2>
-                        <div class="d-flex mb-3">
-                            <span class="cat">Cheverolet</span>
-                            <p class="price ml-auto">$500 <span>/day</span></p>
+                        <div class="text">
+                            <h2 class="mb-0"><a href="/car-single">Mercedes Gran Sedán</a></h2>
+                            <div class="d-flex mb-3">
+                                <span class="cat">Chevrolet</span>
+                                <p class="price ml-auto">$500 <span>/día</span></p>
+                            </div>
+                            <p class="d-flex mb-0 d-block">
+                                <a href="#" class="btn btn-primary py-2 mr-1">Reservar ahora</a>
+                                <a href="/car-single" class="btn btn-secondary py-2 ml-1">Detalles</a>
+                            </p>
                         </div>
-                        <p class="d-flex mb-0 d-block">
-                            <a href="#" class="btn btn-primary py-2 mr-1">Book now</a>
-                            <a href="/car-single" class="btn btn-secondary py-2 ml-1">Details</a>
-                        </p>
                     </div>
                 </div>
-            </div>
             }
         </div>
         <div class="row mt-5">

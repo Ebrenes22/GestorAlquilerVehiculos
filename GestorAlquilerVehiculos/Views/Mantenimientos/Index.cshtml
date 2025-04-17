@@ -1,60 +1,98 @@
 ﻿@model IEnumerable<GestorAlquilerVehiculos.Models.Mantenimiento>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Mantenimientos";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var rolUsuario = TempData["Rol"]?.ToString();
+    TempData.Keep("Rol");
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark fw-bold mb-0">Gestión de Mantenimientos</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehiculo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaMantenimiento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Costo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaMantenimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Costo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.MantenimientoID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MantenimientoID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MantenimientoID">Delete</a>
-            </td>
-        </tr>
+        @if (rolUsuario == "Administrador")
+        {
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus text-white"></i> Registrar Mantenimiento
+            </a>
+        }
+    </div>
+
+    <div class="table-responsive shadow-sm">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Vehículo Marca</th>
+                    <th>Vehículo Modelo</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Costo</th>
+                    <th>Tipo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Vehiculo.Marca</td>
+                        <td>@item.Vehiculo.Modelo</td>
+                        <td>@item.Descripcion</td>
+                        <td>@item.FechaMantenimiento.ToShortDateString()</td>
+                        <td>₡@item.Costo.ToString("N2")</td>
+                        <td>@item.Tipo</td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.MantenimientoID" class="btn btn-sm btn-warning me-1">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <a asp-action="Details" asp-route-id="@item.MantenimientoID" class="btn btn-sm btn-info text-white me-1">
+                                <i class="fas fa-info-circle"></i> Detalles
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.MantenimientoID" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash-alt"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const successMessage = '@ViewBag.Success';
+        const errorMessage = '@ViewBag.Error';
+        const noPermisos = '@ViewBag.NoPermisos';
+
+        if (successMessage) {
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: successMessage,
+                confirmButtonColor: '#198754'
+            });
+        }
+
+        if (errorMessage) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: errorMessage,
+                confirmButtonColor: '#dc3545'
+            });
+        }
+
+        if (noPermisos) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Permiso denegado',
+                text: noPermisos,
+                confirmButtonColor: '#ffc107'
+            });
+        }
+    </script>
 }
-    </tbody>
-</table>

@@ -48,26 +48,56 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: Mantenimientoes/Create
         public IActionResult Create()
         {
-            ViewData["VehiculoID"] = new SelectList(_context.Vehiculos, "VehiculoID", "Estado");
+            ViewData["VehiculoID"] = _context.Vehiculos
+                .Where(v => v.Estado == "Disponible")
+                .Select(v => new SelectListItem
+                {
+                    Value = v.VehiculoID.ToString(),
+                    Text = $"{v.Marca} {v.Modelo} ({v.Placa})"
+                }).ToList();
+
             return View();
         }
 
-        // POST: Mantenimientoes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MantenimientoID,VehiculoID,Descripcion,FechaMantenimiento,Costo,Tipo")] Mantenimiento mantenimiento)
+        public async Task<IActionResult> Create([Bind("VehiculoID,Descripcion,FechaMantenimiento,Costo,Tipo")] Mantenimiento mantenimiento)
         {
+            ModelState.Remove("Vehiculo");
+            ModelState.Remove("MantenimientoID");
             if (ModelState.IsValid)
             {
-                _context.Add(mantenimiento);
-                await _context.SaveChangesAsync();
+                // Insertar el mantenimiento
+                _context.Mantenimientos.Add(mantenimiento);
+                await _context.SaveChangesAsync(); // Se genera el ID automáticamente
+
+                // Cambiar el estado del vehículo a "En Mantenimiento"
+                var vehiculo = await _context.Vehiculos.FindAsync(mantenimiento.VehiculoID);
+                if (vehiculo != null)
+                {
+                    vehiculo.Estado = "En Mantenimiento";
+                    _context.Vehiculos.Update(vehiculo);
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehiculoID"] = new SelectList(_context.Vehiculos, "VehiculoID", "Estado", mantenimiento.VehiculoID);
+
+            // Recargar dropdown si falla el modelo
+            ViewData["VehiculoID"] = _context.Vehiculos
+                .Where(v => v.Estado == "Disponible")
+                .Select(v => new SelectListItem
+                {
+                    Value = v.VehiculoID.ToString(),
+                    Text = $"{v.Marca} {v.Modelo} ({v.Placa})"
+                }).ToList();
+
             return View(mantenimiento);
         }
+
+
+
+
 
         // GET: Mantenimientoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -87,8 +117,7 @@ namespace GestorAlquilerVehiculos.Controllers
         }
 
         // POST: Mantenimientoes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MantenimientoID,VehiculoID,Descripcion,FechaMantenimiento,Costo,Tipo")] Mantenimiento mantenimiento)

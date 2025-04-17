@@ -7,14 +7,14 @@ namespace GestorAlquilerVehiculos.Models
         public int MantenimientoID { get; set; }
 
         public int VehiculoID { get; set; }
-        public Vehiculo Vehiculo { get; set; }
+        public virtual Vehiculo Vehiculo { get; set; }
 
         [Required]
         public string Descripcion { get; set; }
 
         public DateTime FechaMantenimiento { get; set; }
 
-        [Range(0, 100000)]
+        [Range(0, 1000000)]
         public decimal Costo { get; set; }
 
         [Required]

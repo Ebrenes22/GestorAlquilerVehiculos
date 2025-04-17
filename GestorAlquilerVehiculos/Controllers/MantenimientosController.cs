@@ -45,6 +45,7 @@ namespace GestorAlquilerVehiculos.Controllers
             return View(mantenimiento);
         }
 
+        #region CREATE MANTENIMIENTOS
         // GET: Mantenimientoes/Create
         public IActionResult Create()
         {
@@ -69,9 +70,7 @@ namespace GestorAlquilerVehiculos.Controllers
             {
                 // Insertar el mantenimiento
                 _context.Mantenimientos.Add(mantenimiento);
-                await _context.SaveChangesAsync(); // Se genera el ID automáticamente
-
-                // Cambiar el estado del vehículo a "En Mantenimiento"
+                await _context.SaveChangesAsync(); 
                 var vehiculo = await _context.Vehiculos.FindAsync(mantenimiento.VehiculoID);
                 if (vehiculo != null)
                 {
@@ -82,8 +81,6 @@ namespace GestorAlquilerVehiculos.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
-            // Recargar dropdown si falla el modelo
             ViewData["VehiculoID"] = _context.Vehiculos
                 .Where(v => v.Estado == "Disponible")
                 .Select(v => new SelectListItem
@@ -94,10 +91,9 @@ namespace GestorAlquilerVehiculos.Controllers
 
             return View(mantenimiento);
         }
+        #endregion
 
-
-
-
+        #region EDIT MANTENIMIENTOS
 
         // GET: Mantenimientoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -107,21 +103,25 @@ namespace GestorAlquilerVehiculos.Controllers
                 return NotFound();
             }
 
-            var mantenimiento = await _context.Mantenimientos.FindAsync(id);
+            var mantenimiento = await _context.Mantenimientos
+                .Include(m => m.Vehiculo)
+                .FirstOrDefaultAsync(m => m.MantenimientoID == id);
+
             if (mantenimiento == null)
             {
                 return NotFound();
             }
-            ViewData["VehiculoID"] = new SelectList(_context.Vehiculos, "VehiculoID", "Estado", mantenimiento.VehiculoID);
+            ViewBag.NombreVehiculo = $"{mantenimiento.Vehiculo.Marca} {mantenimiento.Vehiculo.Modelo} ({mantenimiento.Vehiculo.Placa})";
+
             return View(mantenimiento);
         }
 
         // POST: Mantenimientoes/Edit/5
-        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MantenimientoID,VehiculoID,Descripcion,FechaMantenimiento,Costo,Tipo")] Mantenimiento mantenimiento)
         {
+            ModelState.Remove("Vehiculo");
             if (id != mantenimiento.MantenimientoID)
             {
                 return NotFound();
@@ -147,31 +147,22 @@ namespace GestorAlquilerVehiculos.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VehiculoID"] = new SelectList(_context.Vehiculos, "VehiculoID", "Estado", mantenimiento.VehiculoID);
-            return View(mantenimiento);
-        }
 
-        // GET: Mantenimientoes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mantenimiento = await _context.Mantenimientos
-                .Include(m => m.Vehiculo)
-                .FirstOrDefaultAsync(m => m.MantenimientoID == id);
-            if (mantenimiento == null)
-            {
-                return NotFound();
-            }
+            // En caso de error de validación, recargamos el nombre del vehículo
+            ViewBag.NombreVehiculo = _context.Vehiculos
+                .Where(v => v.VehiculoID == mantenimiento.VehiculoID)
+                .Select(v => $"{v.Marca} {v.Modelo} ({v.Placa})")
+                .FirstOrDefault();
 
             return View(mantenimiento);
         }
 
+        #endregion
+
+        #region DELETE MANTENIMIENTOS
+       
         // POST: Mantenimientoes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -179,11 +170,15 @@ namespace GestorAlquilerVehiculos.Controllers
             if (mantenimiento != null)
             {
                 _context.Mantenimientos.Remove(mantenimiento);
+                await _context.SaveChangesAsync();
+                ViewBag.Success = "Mantenimiento eliminado correctamente.";
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+
+        #endregion
 
         private bool MantenimientoExists(int id)
         {

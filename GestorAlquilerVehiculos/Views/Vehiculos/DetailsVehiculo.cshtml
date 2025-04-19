@@ -1,0 +1,114 @@
+﻿@model GestorAlquilerVehiculos.Models.Vehiculo
+@{
+    ViewData["Title"] = "Detalles del Vehículo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@Model.ImagenURL');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <p class="breadcrumbs">
+                    <span class="mr-2"><a asp-action="Listado">Listado <i class="ion-ios-arrow-forward"></i></a></span>
+                    <span>Detalles del Vehículo <i class="ion-ios-arrow-forward"></i></span>
+                </p>
+                <h1 class="mb-3 bread">Detalles del Vehículo</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-car-details">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="car-details">
+                   
+                    <div class="text text-center mt-3">
+                        <span class="subheading">@Model.Marca</span>
+                        <h2>@Model.Modelo</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Características del Vehículo -->
+        <div class="row mt-4">
+            <div class="col-md-4 d-flex align-items-stretch">
+                <div class="media block-6 services text-center">
+                    <div class="media-body py-md-4">
+                        <h3 class="heading mb-2">Año</h3>
+                        <span class="display-5">@Model.Anio</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-stretch">
+                <div class="media block-6 services text-center">
+                    <div class="media-body py-md-4">
+                        <h3 class="heading mb-2">Precio por Día</h3>
+                        <span class="display-5">@Model.PrecioPorDia.ToString("C")</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-stretch">
+                <div class="media block-6 services text-center">
+                    <div class="media-body py-md-4">
+                        <h3 class="heading mb-2">Estado</h3>
+                        <span class="display-5">@Model.Estado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestañas -->
+        <div class="row mt-5">
+            <div class="col-md-12 pills">
+                <div class="bd-example bd-example-tabs">
+                    <div class="d-flex justify-content-center">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-specs-tab" data-toggle="pill" href="#pills-specs" role="tab">Especificaciones</a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-specs" role="tabpanel">
+                            <dl class="row">
+                                <dt class="col-sm-3">Marca</dt>
+                                <dd class="col-sm-9">@Model.Marca</dd>
+
+                                <dt class="col-sm-3">Modelo</dt>
+                                <dd class="col-sm-9">@Model.Modelo</dd>
+
+                                <dt class="col-sm-3">Año</dt>
+                                <dd class="col-sm-9">@Model.Anio</dd>
+
+                                <dt class="col-sm-3">Placa</dt>
+                                <dd class="col-sm-9">@Model.Placa</dd>
+
+                                <dt class="col-sm-3">Precio/Día</dt>
+                                <dd class="col-sm-9">@Model.PrecioPorDia.ToString("C")</dd>
+
+                                <dt class="col-sm-3">Estado</dt>
+                                <dd class="col-sm-9">@Model.Estado</dd>
+
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón Regresar -->
+        <div class="row mt-4">
+            <div class="col text-center">
+                <a asp-action="Listado" class="btn btn-outline-secondary">← Volver al Listado</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+

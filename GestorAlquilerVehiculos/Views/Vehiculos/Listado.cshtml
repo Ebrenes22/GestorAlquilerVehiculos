@@ -14,7 +14,7 @@
                 <h1 class="mb-3 bread">Escoja su Vehiculo</h1>
             </div>
         </div>
-        
+
     </div>
 </section>
 
@@ -23,25 +23,26 @@
     <div class="container">
         <div class="row">
             @foreach (var item in Model)
-            { @if (item.Estado == "Disponible"){
-                <div class="col-md-4">
-                    <div class="car-wrap rounded ftco-animate">
-                        <div class="img rounded d-flex align-items-end" style="background-image: url('@item.ImagenURL');"></div>
-                        <div class="text">
-                            <h2 class="mb-0"><a href="/car-single">@item.Modelo</a></h2>
-                            <div class="d-flex mb-3">
-                                <span class="cat">@item.Marca</span>
-                                <p class="price ml-auto">₡@item.PrecioPorDia <span>/día</span></p>
-                            </div>
-                            <p class="d-flex mb-0 d-block">
+            { @if (item.Estado == "Disponible")
+                {
+                    <div class="col-md-4">
+                        <div class="car-wrap rounded ftco-animate">
+                            <div class="img rounded d-flex align-items-end" style="background-image: url('@item.ImagenURL');"></div>
+                            <div class="text">
+                                <h2 class="mb-0"><a href="/car-single">@item.Modelo</a></h2>
+                                <div class="d-flex mb-3">
+                                    <span class="cat">@item.Marca</span>
+                                    <p class="price ml-auto">₡@item.PrecioPorDia <span>/día</span></p>
+                                </div>
+                                <p class="d-flex mb-0 d-block">
                                     <a href="#" class="btn btn-primary py-2 mr-1">Reservar</a>
 
-                                <a href="/car-single" class="btn btn-secondary py-2 ml-1">Detalles</a>
-                               
-                            </p>
+                                    <a asp-action="DetailsVehiculo" asp-route-id="@item.VehiculoID" class="btn btn-secondary py-2 ml-1">Detalles</a>
+
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
             }
         </div>

@@ -35,7 +35,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr data-fecha='@item.FechaMantenimiento.ToString("yyyy-MM-dd")'>
                         <td>@item.Vehiculo.Marca</td>
                         <td>@item.Vehiculo.Modelo</td>
                         <td>@item.Descripcion</td>
@@ -53,6 +53,10 @@
                                 <i class="fas fa-trash-alt"></i> Eliminar
                             </button>
 
+                            <button type="button" class="btn btn-sm btn-success completar-row me-1">
+                                <i class="fas fa-check"></i> Completado
+                            </button>
+
                         </td>
                     </tr>
                 }
@@ -61,7 +65,6 @@
     </div>
 </div>
 
-<!-- Modal Confirmación de Eliminación -->
 <div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -84,47 +87,58 @@
 </div>
 
 
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
-        const successMessage = '@ViewBag.Success';
-        const errorMessage = '@ViewBag.Error';
-        const noPermisos = '@ViewBag.NoPermisos';
+        document.addEventListener('DOMContentLoaded', () => {
+          const successMessage = '@ViewBag.Success';
+          const errorMessage   = '@ViewBag.Error';
+          const noPermisos     = '@ViewBag.NoPermisos';
+          if (successMessage) Swal.fire({ icon:'success', title:'¡Éxito!', text: successMessage, confirmButtonColor:'#198754' });
+          if (errorMessage)   Swal.fire({ icon:'error',   title:'Error',    text: errorMessage,   confirmButtonColor:'#dc3545' });
+          if (noPermisos)     Swal.fire({ icon:'warning', title:'Permiso denegado', text: noPermisos, confirmButtonColor:'#ffc107' });
 
-        if (successMessage) {
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: successMessage,
-                confirmButtonColor: '#198754'
+          const eliminarModal = document.getElementById('modalEliminar');
+          eliminarModal.addEventListener('show.bs.modal', e => {
+            const id = e.relatedTarget.getAttribute('data-id');
+            document.getElementById('mantenimientoIdEliminar').value = id;
+          });
+
+          
+          const tbody = document.querySelector('table tbody');
+
+          const reorderRows = () => {
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            rows.sort((a, b) => {
+              const aComp = a.dataset.completed === 'true';
+              const bComp = b.dataset.completed === 'true';
+              if (aComp !== bComp) return aComp ? 1 : -1;
+              const da = new Date(a.dataset.fecha);
+              const db = new Date(b.dataset.fecha);
+              return db - da;
             });
-        }
+            rows.forEach(r => tbody.appendChild(r));
+          };
 
-        if (errorMessage) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: errorMessage,
-                confirmButtonColor: '#dc3545'
+ 
+          document.querySelectorAll('.completar-row').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const fila = btn.closest('tr');
+              fila.dataset.completed = 'true';
+              fila.classList.add('table-secondary', 'text-muted');
+              fila.querySelectorAll('button, a').forEach(el => {
+                el.disabled = true;
+                el.classList.add('disabled');
+                el.setAttribute('aria-disabled','true');
+              });
+              reorderRows();
             });
-        }
+          });
 
-        if (noPermisos) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Permiso denegado',
-                text: noPermisos,
-                confirmButtonColor: '#ffc107'
-            });
-        }
-
-             const eliminarModal = document.getElementById('modalEliminar');
-        eliminarModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget;
-            const id = button.getAttribute('data-id');
-            const inputHidden = document.getElementById('mantenimientoIdEliminar');
-            inputHidden.value = id;
+          reorderRows();
         });
     </script>
 }
+
+

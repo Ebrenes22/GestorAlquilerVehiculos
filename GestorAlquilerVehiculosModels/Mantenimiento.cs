@@ -17,10 +17,10 @@ namespace GestorAlquilerVehiculos.Models
         [Range(0, 1000000)]
         public decimal Costo { get; set; }
 
-
         [Required]
         [RegularExpression("Preventivo|Correctivo", ErrorMessage = "Tipo inválido")]
         public string Tipo { get; set; }
+
     }
 
 

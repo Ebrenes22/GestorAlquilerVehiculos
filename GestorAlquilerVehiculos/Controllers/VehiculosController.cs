@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using GestorAlquilerVehiculos.Data;
+﻿using GestorAlquilerVehiculos.Data;
 using GestorAlquilerVehiculos.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestorAlquilerVehiculos.Controllers
 {
@@ -24,8 +19,30 @@ namespace GestorAlquilerVehiculos.Controllers
             return View(await _context.Vehiculos.ToListAsync());
         }
 
+        public async Task<IActionResult> Listado()
+        {
+            return View(await _context.Vehiculos.ToListAsync());
+        }
+
         // GET: Vehiculoes/Details/5
         public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var vehiculo = await _context.Vehiculos
+                .FirstOrDefaultAsync(m => m.VehiculoID == id);
+            if (vehiculo == null)
+            {
+                return NotFound();
+            }
+
+            return View(vehiculo);
+        }
+
+        public async Task<IActionResult> DetailsVehiculo(int? id)
         {
             if (id == null)
             {

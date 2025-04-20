@@ -32,10 +32,14 @@ namespace GestorAlquilerVehiculos.Controllers
         // POST: ClienteReservas/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NombreCompleto,Identificacion,CorreoElectronico,Direccion,Telefono")] ClienteReserva clienteReserva)
+        public async Task<IActionResult> Create(ClienteReserva clienteReserva)
         {
+
+            ModelState.Remove("ClienteReservaID ");
+            ModelState.Remove("Reservas");
             if (!ModelState.IsValid)
             {
+       
                 return View(clienteReserva);
             }
 
@@ -43,15 +47,17 @@ namespace GestorAlquilerVehiculos.Controllers
             {
                 _context.Add(clienteReserva);
                 await _context.SaveChangesAsync();
+
                 TempData["Success"] = "Cliente registrado correctamente.";
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Reservas", new { clienteReservaID = clienteReserva.ClienteReservaID });
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("", "Error al guardar el cliente: " + ex.Message);
+                ModelState.AddModelError(string.Empty, "Error al guardar el cliente: " + ex.Message);
                 return View(clienteReserva);
             }
         }
+
 
         // GET: ClienteReservas/Edit/5
         public async Task<IActionResult> Edit(int? id)

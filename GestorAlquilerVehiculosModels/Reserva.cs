@@ -21,7 +21,6 @@ namespace GestorAlquilerVehiculos.Models
         [Required]
         public DateTime FechaFin { get; set; }
 
-        [Range(0, 100000)]
         public decimal CostoTotal { get; set; }
 
         [Required]

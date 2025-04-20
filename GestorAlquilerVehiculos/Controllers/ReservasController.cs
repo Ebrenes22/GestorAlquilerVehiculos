@@ -28,40 +28,52 @@ namespace GestorAlquilerVehiculos.Controllers
         }
 
         // GET: Reservas/Create
-        public IActionResult Create()
+        public IActionResult Create(int clienteReservaID)
         {
+            var cliente = _context.ClientesReserva
+                                 .FirstOrDefault(c => c.ClienteReservaID == clienteReservaID);
+            if (cliente == null)
+                return NotFound();
+
+            ViewBag.NombreCliente = cliente.NombreCompleto;
+            ViewBag.ClienteReservaID = clienteReservaID;
+
             ViewData["VehiculoID"] = new SelectList(
                 _context.Vehiculos.Select(v => new {
                     v.VehiculoID,
                     Nombre = v.Marca + " " + v.Modelo + " - ₡" + v.PrecioPorDia
                 }),
                 "VehiculoID", "Nombre");
-            // Suponiendo que el cliente ya está definido en sesión o similar
-            //ViewBag.ClienteReservaID  /* obtén ID del cliente actual */
-            return View();
-        }
 
-        // POST: Reservas/Create
-        [HttpPost, ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservaID,ClienteReservaID,VehiculoID,FechaInicio,FechaFin,CostoTotal,Estado,FechaRegistro")] Reserva reserva)
-        {
-            if (ModelState.IsValid)
+            ViewData["VehiculosInfo"] = _context.Vehiculos
+                .ToDictionary(v => v.VehiculoID, v => v.PrecioPorDia);
+            var modelo = new Reserva
             {
-                _context.Add(reserva);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-
-            // Repoblar dropdown si hay error
-            ViewData["VehiculoID"] = new SelectList(
-                _context.Vehiculos.Select(v => new {
-                    v.VehiculoID,
-                    Nombre = v.Marca + " " + v.Modelo + " - ₡" + v.PrecioPorDia
-                }),
-                "VehiculoID", "Nombre", reserva.VehiculoID);
-            ViewBag.ClienteReservaID = reserva.ClienteReservaID;
-            return View(reserva);
+                ClienteReservaID = clienteReservaID,
+                Estado = "Pendiente",
+                FechaInicio = DateTime.Now,
+                FechaFin = DateTime.Now,
+                FechaRegistro = DateTime.Now
+            };
+            return View(modelo);
         }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Reserva reserva)
+        {
+
+            
+            reserva.Estado = "Pendiente";
+            reserva.FechaRegistro = DateTime.Now;
+
+            _context.Reservas.Add(reserva);
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Reserva creada correctamente.";
+
+            return RedirectToAction("Details", "Reservas", new { id = reserva.ReservaID });
+        }
+
 
         // GET: Reservas/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -134,6 +146,28 @@ namespace GestorAlquilerVehiculos.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        // GET: Reservas/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var reserva = await _context.Reservas
+                .Include(r => r.ClienteReserva)
+                .Include(r => r.Vehiculo)
+                .FirstOrDefaultAsync(r => r.ReservaID == id.Value);
+
+            if (reserva == null)
+            {
+                return NotFound();
+            }
+
+            return View(reserva);
+        }
+
 
         private bool ReservaExists(int id)
         {

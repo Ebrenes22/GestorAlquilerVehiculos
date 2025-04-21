@@ -4,65 +4,74 @@
     ViewData["Title"] = "Detalle de Reserva";
     Layout = "~/Views/Shared/_Layout.cshtml";
     int dias = (int)(Model.FechaFin.Date - Model.FechaInicio.Date).TotalDays;
+    var imagenVehiculo = Model.Vehiculo?.ImagenURL ?? "/images/placeholder.png";
 }
 
 <div class="row justify-content-center mt-5">
-    <div class="col-md-8">
+    <div class="col-md-10">
         <div class="card shadow">
             <div class="card-header bg-primary text-white text-center">
                 <h4 class="mb-0">Detalle de Reserva</h4>
             </div>
             <div class="card-body">
-                <dl class="row mb-3">
-                    <dt class="col-sm-4 text-end">Cliente:</dt>
-                    <dd class="col-sm-8">@Model.ClienteReserva?.NombreCompleto</dd>
+                <div class="row">
+                    <div class="col-md-8">
+                        <dl class="row mb-3">
+                            <dt class="col-sm-4 text-end">Cliente:</dt>
+                            <dd class="col-sm-8">@Model.ClienteReserva?.NombreCompleto</dd>
 
-                    <dt class="col-sm-4 text-end">Correo:</dt>
-                    <dd class="col-sm-8">@Model.ClienteReserva?.CorreoElectronico</dd>
+                            <dt class="col-sm-4 text-end">Correo:</dt>
+                            <dd class="col-sm-8">@Model.ClienteReserva?.CorreoElectronico</dd>
 
-                    <dt class="col-sm-4 text-end">Teléfono:</dt>
-                    <dd class="col-sm-8">@Model.ClienteReserva?.Telefono</dd>
+                            <dt class="col-sm-4 text-end">Teléfono:</dt>
+                            <dd class="col-sm-8">@Model.ClienteReserva?.Telefono</dd>
 
-                    <dt class="col-sm-4 text-end">Vehículo:</dt>
-                    <dd class="col-sm-8">
-                        @Model.Vehiculo?.Marca @Model.Vehiculo?.Modelo
-                    </dd>
+                            <dt class="col-sm-4 text-end">Vehículo:</dt>
+                            <dd class="col-sm-8">
+                                @Model.Vehiculo?.Marca @Model.Vehiculo?.Modelo
+                            </dd>
 
-                    <dt class="col-sm-4 text-end">Precio por día:</dt>
-                    <dd class="col-sm-8">
-                        @Model.Vehiculo?.PrecioPorDia.ToString("C")
-                    </dd>
+                            <dt class="col-sm-4 text-end">Precio por día:</dt>
+                            <dd class="col-sm-8">
+                                @Model.Vehiculo?.PrecioPorDia.ToString("C")
+                            </dd>
 
-                    <dt class="col-sm-4 text-end">Fecha de Inicio:</dt>
-                    <dd class="col-sm-8">
-                        @Model.FechaInicio.ToString("f")
-                    </dd>
+                            <dt class="col-sm-4 text-end">Fecha de Inicio:</dt>
+                            <dd class="col-sm-8">
+                                @Model.FechaInicio.ToString("f")
+                            </dd>
 
-                    <dt class="col-sm-4 text-end">Fecha de Entrega:</dt>
-                    <dd class="col-sm-8">
-                        @Model.FechaFin.ToString("f")
-                    </dd>
+                            <dt class="col-sm-4 text-end">Fecha de Entrega:</dt>
+                            <dd class="col-sm-8">
+                                @Model.FechaFin.ToString("f")
+                            </dd>
 
-                    <dt class="col-sm-4 text-end">Días:</dt>
-                    <dd class="col-sm-8">
-                        @dias día@(dias != 1 ? "s" : "")
-                    </dd>
+                            <dt class="col-sm-4 text-end">Días:</dt>
+                            <dd class="col-sm-8">
+                                @dias día@(dias != 1 ? "s" : "")
+                            </dd>
 
-                    <dt class="col-sm-4 text-end">Costo Total:</dt>
-                    <dd class="col-sm-8">
-                        @Model.CostoTotal.ToString("C")
-                    </dd>
+                            <dt class="col-sm-4 text-end">Costo Total:</dt>
+                            <dd class="col-sm-8">
+                                @Model.CostoTotal.ToString("C")
+                            </dd>
 
-                    <dt class="col-sm-4 text-end">Estado:</dt>
-                    <dd class="col-sm-8">@Model.Estado</dd>
+                            <dt class="col-sm-4 text-end">Estado:</dt>
+                            <dd class="col-sm-8">@Model.Estado</dd>
 
-                    <dt class="col-sm-4 text-end">Registrado:</dt>
-                    <dd class="col-sm-8">
-                        @Model.FechaRegistro.ToString("g")
-                    </dd>
-                </dl>
-                <div class="text-center">
-                    <a asp-controller = "Home "asp-action="Index" class="btn btn-secondary">
+                            <dt class="col-sm-4 text-end">Registrado:</dt>
+                            <dd class="col-sm-8">
+                                @Model.FechaRegistro.ToString("g")
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-center justify-content-center">
+                        <img src="@imagenVehiculo" alt="Imagen del Vehículo" class="img-fluid rounded" style="max-height:300px;" />
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a asp-controller = "Home" asp-action="Index" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-1"></i>Aceptar
                     </a>
                 </div>

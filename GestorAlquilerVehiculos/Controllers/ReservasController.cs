@@ -45,6 +45,10 @@ namespace GestorAlquilerVehiculos.Controllers
                 }),
                 "VehiculoID", "Nombre");
 
+            ViewData["VehiculosImagen"] = _context.Vehiculos
+                .ToDictionary(v => v.VehiculoID, v => v.ImagenURL);
+
+
             ViewData["VehiculosInfo"] = _context.Vehiculos
                 .ToDictionary(v => v.VehiculoID, v => v.PrecioPorDia);
             var modelo = new Reserva

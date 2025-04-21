@@ -3,6 +3,7 @@
     ViewData["Title"] = "Reservar Vehículo";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var vehiculosInfo = ViewData["VehiculosInfo"] as Dictionary<int, decimal>;
+    var vehiculosImagen = ViewData["VehiculosImagen"] as Dictionary<int, string>;
     var nombreCliente = ViewBag.NombreCliente as string;
 }
 
@@ -12,56 +13,60 @@
     <form asp-action="Create" method="post" class="p-4 shadow rounded bg-white">
         @Html.AntiForgeryToken()
 
-        <!-- Nombre del Cliente (readonly) -->
         <div class="form-group mb-3">
             <label>Cliente</label>
             <input type="text" class="form-control" value="@nombreCliente" readonly />
         </div>
-
-        <!-- ClienteReservaID oculto -->
         <input type="hidden" asp-for="ClienteReservaID" />
 
-        <!-- Vehículo -->
-        <div class="form-group mb-3">
-            <label asp-for="VehiculoID">Vehículo - Precio por Dia</label>
-            <select asp-for="VehiculoID" class="form-control" asp-items="ViewBag.VehiculoID" id="vehiculoSelect">
-                <option value="">-- Selecciona un vehículo --</option>
-            </select>
-            <span asp-validation-for="VehiculoID" class="text-danger"></span>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label asp-for="VehiculoID">Vehículo - Precio por Día</label>
+                <select asp-for="VehiculoID" class="form-control" asp-items="ViewBag.VehiculoID" id="vehiculoSelect">
+                    <option value="">-- Selecciona un vehículo --</option>
+                </select>
+                <span asp-validation-for="VehiculoID" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-6 mb-3 text-center">
+                <label>Imagen</label>
+                <div class="border rounded p-2">
+                    <img id="vehiculoImage"
+                         src="~/images/placeholder.png"
+                         alt="Imagen Vehículo"
+                         class="img-fluid"
+                         style="max-height:200px;" />
+                </div>
+            </div>
         </div>
 
-        <!-- Fecha de Inicio (solo fecha) -->
-        <div class="form-group mb-3">
-            <label>Fecha de Inicio</label>
-            <input type="date" id="fechaInicioDate" class="form-control" />
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Fecha de Inicio</label>
+                <input type="date" id="fechaInicioDate" class="form-control" />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label>Cantidad de Días</label>
+                <input type="number" id="diasSelect" class="form-control" min="1" value="1" />
+            </div>
         </div>
 
-        <!-- Cantidad de Días -->
-        <div class="form-group mb-3">
-            <label>Cantidad de Días</label>
-            <input type="number" id="diasSelect" class="form-control" min="1" value="1" />
-        </div>
-
-        <!-- Fecha de Entrega Calculada -->
+   
         <div class="form-group mb-3">
             <label asp-for="FechaFin">Fecha de Entrega</label>
             <input asp-for="FechaFin" type="datetime-local" class="form-control" id="fechaFinVisible" readonly />
             <span asp-validation-for="FechaFin" class="text-danger"></span>
         </div>
 
-        <!-- Campos ocultos de FechaInicio y CostoTotal -->
         <input type="hidden" asp-for="FechaInicio" id="fechaInicio" />
         <div class="form-group mb-3">
             <label asp-for="CostoTotal">Costo Total (₡)</label>
-            <input asp-for="CostoTotal" type="number" step="0.01"  class="form-control" id="CostoTotal" readonly />
+            <input asp-for="CostoTotal" type="number" step="0.01" class="form-control" id="CostoTotal" readonly />
             <span asp-validation-for="CostoTotal" class="text-danger"></span>
         </div>
-
-        <!-- Estado oculto y FechaRegistro oculto -->
         <input type="hidden" asp-for="Estado" value="Pendiente" />
         <input type="hidden" asp-for="FechaRegistro" value="@DateTime.Now:yyyy-MM-ddTHH:mm:ss" />
 
-        <!-- Botones -->
         <div class="form-group text-center mt-4">
             <button type="submit" class="btn btn-primary px-4">Reservar</button>
             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary px-4 ms-2">Cancelar</a>
@@ -72,39 +77,42 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-        const preciosVehiculos = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(vehiculosInfo));
-        const vehiculoSelect = document.getElementById("vehiculoSelect");
-        const fechaInicioDate = document.getElementById("fechaInicioDate");
-        const diasSelect = document.getElementById("diasSelect");
-        const costoTotalInput = document.getElementById("CostoTotal");
-        const fechaInicioInput = document.getElementById("fechaInicio");
-        const fechaFinVisible = document.getElementById("fechaFinVisible");
+        const preciosVehiculos   = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(vehiculosInfo));
+        const imagenesVehiculos  = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(vehiculosImagen));
+
+        const vehiculoSelect     = document.getElementById("vehiculoSelect");
+        const fechaInicioDate    = document.getElementById("fechaInicioDate");
+        const diasSelect         = document.getElementById("diasSelect");
+        const costoTotalInput    = document.getElementById("CostoTotal");
+        const fechaInicioInput   = document.getElementById("fechaInicio");
+        const fechaFinVisible    = document.getElementById("fechaFinVisible");
+        const vehiculoImage      = document.getElementById("vehiculoImage");
 
         function actualizarReserva() {
-            const vehiculoId = vehiculoSelect.value;
-            const precioDia = preciosVehiculos[vehiculoId];
+            const vehiculoId     = vehiculoSelect.value;
+            const precioDia      = preciosVehiculos[vehiculoId];
+            const imagenUrl      = imagenesVehiculos[vehiculoId] || '/images/placeholder.png';
+            vehiculoImage.src    = imagenUrl;
+
             const fechaInicioVal = fechaInicioDate.value;
-            const dias = parseInt(diasSelect.value) || 0;
+            const dias           = parseInt(diasSelect.value) || 0;
 
             if (!vehiculoId || !fechaInicioVal || dias < 1) {
                 costoTotalInput.value = "";
                 fechaInicioInput.value = "";
-                fechaFinVisible.value = "";
+                fechaFinVisible.value  = "";
                 return;
             }
 
-            // Construir fechaInicio con hora fija a las 08:00
             const fi = new Date(fechaInicioVal + 'T08:00:00');
-            // Calcular fechaFin sumando días
+      
             const ff = new Date(fi);
             ff.setDate(ff.getDate() + dias);
 
-            // Formatear para html5 datetime-local
-            const formato = date => date.toISOString().slice(0,16);
+            const formato = d => d.toISOString().slice(0,16);
             fechaInicioInput.value = formato(fi);
-            fechaFinVisible.value = formato(ff);
+            fechaFinVisible.value  = formato(ff);
 
-            // Calcular costo total
             const total = (dias * precioDia).toFixed(2);
             costoTotalInput.value = total;
         }
@@ -113,7 +121,6 @@
         fechaInicioDate.addEventListener("change", actualizarReserva);
         diasSelect.addEventListener("input", actualizarReserva);
 
-        // Inicializa al cargar
         actualizarReserva();
     </script>
 }

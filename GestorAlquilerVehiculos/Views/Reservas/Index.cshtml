@@ -1,78 +1,114 @@
 ﻿@model IEnumerable<GestorAlquilerVehiculos.Models.Reserva>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Gestión de Reservas";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var rolUsuario = TempData["Rol"]?.ToString();
+    TempData.Keep("Rol");
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark fw-bold mb-0">Gestión de Reservas</h2>
+       @*  @if (rolUsuario == "Administrador")
+        {
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus text-white"></i> Nueva Reserva
+            </a>
+        } *@
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Usuario)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClienteReserva)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehiculo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CostoTotal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Estado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaRegistro)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Usuario.ContrasenaHash)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClienteReserva.CorreoElectronico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaFin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CostoTotal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaRegistro)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReservaID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReservaID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReservaID">Delete</a>
-            </td>
-        </tr>
+    <div class="table-responsive shadow-sm">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Cliente</th>
+                    <th>Vehículo</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Costo Total</th>
+                    <th>Estado</th>
+                    <th>Registrado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(item.ClienteReserva?.NombreCompleto ?? "-")</td>
+
+                        <td>
+                            @(item.Vehiculo != null
+                                ? $"{item.Vehiculo.Marca} {item.Vehiculo.Modelo}"
+                                : "-")
+                        </td>
+                        <td>@item.FechaInicio.ToString("g")</td>
+                        <td>@item.FechaFin.ToString("g")</td>
+                        <td>@item.CostoTotal.ToString("C")</td>
+                        <td>@item.Estado</td>
+                        <td>@item.FechaRegistro.ToShortDateString()</td>
+                        <td>
+                            @if (rolUsuario == "Administrador")
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.ReservaID" class="btn btn-sm btn-warning me-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.ReservaID" class="btn btn-sm btn-info text-white me-1">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                <button type="button"
+                                        class="btn btn-sm btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEliminar"
+                                        data-id="@item.ReservaID">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+
+                            }
+                            else
+                            {
+                                <a asp-action="Details" asp-route-id="@item.ReservaID" class="btn btn-sm btn-info text-white">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="formEliminar" method="post" asp-action="DeleteConfirmed">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="modalEliminarLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar esta reserva? Esta acción no se puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="reservaIdEliminar" name="id" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var modalEliminar = document.getElementById('modalEliminar');
+        modalEliminar.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            var inputId = modalEliminar.querySelector('#reservaIdEliminar');
+            inputId.value = id;
+        });
+    </script>
 }
-    </tbody>
-</table>

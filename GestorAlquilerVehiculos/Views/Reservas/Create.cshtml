@@ -5,11 +5,24 @@
     var vehiculosInfo = ViewData["VehiculosInfo"] as Dictionary<int, decimal>;
     var vehiculosImagen = ViewData["VehiculosImagen"] as Dictionary<int, string>;
     var nombreCliente = ViewBag.NombreCliente as string;
+    var reservasExistentes = ViewData["ReservasExistentes"] as string;
 }
 
-<h2 class="text-center mb-4">Reservar Vehículo</h2>
+<h2 class="text-center my-4">Reservar Vehículo</h2>
 
 <div class="container">
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+
     <form asp-action="Create" method="post" class="p-4 shadow rounded bg-white">
         @Html.AntiForgeryToken()
 
@@ -44,6 +57,9 @@
             <div class="col-md-6 mb-3">
                 <label>Fecha de Inicio</label>
                 <input type="date" id="fechaInicioDate" class="form-control" />
+                <div id="fechaErrorMsg" class="text-danger mt-1" style="display: none;">
+                    Este vehículo no está disponible en las fechas seleccionadas
+                </div>
             </div>
             <div class="col-md-6 mb-3">
                 <label>Cantidad de Días</label>
@@ -51,7 +67,6 @@
             </div>
         </div>
 
-   
         <div class="form-group mb-3">
             <label asp-for="FechaFin">Fecha de Entrega</label>
             <input asp-for="FechaFin" type="datetime-local" class="form-control" id="fechaFinVisible" readonly />
@@ -68,7 +83,7 @@
         <input type="hidden" asp-for="FechaRegistro" value="@DateTime.Now:yyyy-MM-ddTHH:mm:ss" />
 
         <div class="form-group text-center mt-4">
-            <button type="submit" class="btn btn-primary px-4">Reservar</button>
+            <button type="submit" class="btn btn-primary px-4" id="btnReservar" disabled>Reservar</button>
             <a asp-controller="Home" asp-action="Index" class="btn btn-secondary px-4 ms-2">Cancelar</a>
         </div>
     </form>
@@ -79,6 +94,7 @@
     <script>
         const preciosVehiculos   = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(vehiculosInfo));
         const imagenesVehiculos  = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(vehiculosImagen));
+        const reservasExistentes = @Html.Raw(reservasExistentes);
 
         const vehiculoSelect     = document.getElementById("vehiculoSelect");
         const fechaInicioDate    = document.getElementById("fechaInicioDate");
@@ -87,6 +103,30 @@
         const fechaInicioInput   = document.getElementById("fechaInicio");
         const fechaFinVisible    = document.getElementById("fechaFinVisible");
         const vehiculoImage      = document.getElementById("vehiculoImage");
+        const btnReservar        = document.getElementById("btnReservar");
+        const fechaErrorMsg      = document.getElementById("fechaErrorMsg");
+
+        const hoy = new Date();
+        fechaInicioDate.min = hoy.toISOString().split('T')[0];
+        fechaInicioDate.value = hoy.toISOString().split('T')[0];
+
+        function verificarDisponibilidad(vehiculoId, fechaInicio, fechaFin) {
+            if (!vehiculoId || !fechaInicio || !fechaFin) {
+                return true; 
+            }
+
+            const inicio = new Date(fechaInicio);
+            const fin = new Date(fechaFin);
+
+            return !reservasExistentes.some(r => {
+                if (r.VehiculoID != vehiculoId) return false;
+
+                const reservaInicio = new Date(r.FechaInicio);
+                const reservaFin = new Date(r.FechaFin);
+
+                return (inicio < reservaFin && fin > reservaInicio);
+            });
+        }
 
         function actualizarReserva() {
             const vehiculoId     = vehiculoSelect.value;
@@ -101,11 +141,13 @@
                 costoTotalInput.value = "";
                 fechaInicioInput.value = "";
                 fechaFinVisible.value  = "";
+                btnReservar.disabled = true;
+                fechaErrorMsg.style.display = "none";
                 return;
             }
 
             const fi = new Date(fechaInicioVal + 'T08:00:00');
-      
+
             const ff = new Date(fi);
             ff.setDate(ff.getDate() + dias);
 
@@ -115,11 +157,32 @@
 
             const total = (dias * precioDia).toFixed(2);
             costoTotalInput.value = total;
+
+            const disponible = verificarDisponibilidad(vehiculoId, fi, ff);
+            btnReservar.disabled = !disponible;
+            fechaErrorMsg.style.display = disponible ? "none" : "block";
+
+            if (vehiculoId && fechaInicioVal && dias > 0) {
+                const url = `/Reservas/VerificarDisponibilidad?vehiculoID=${vehiculoId}&fechaInicio=${formato(fi)}&fechaFin=${formato(ff)}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.disponible !== disponible) {
+                            btnReservar.disabled = !data.disponible;
+                            fechaErrorMsg.style.display = data.disponible ? "none" : "block";
+                        }
+                    })
+                    .catch(error => console.error('Error verificando disponibilidad:', error));
+            }
         }
 
         vehiculoSelect.addEventListener("change", actualizarReserva);
         fechaInicioDate.addEventListener("change", actualizarReserva);
         diasSelect.addEventListener("input", actualizarReserva);
+
+        const fechaActual = new Date();
+        fechaInicioDate.value = fechaActual.toISOString().split('T')[0];
 
         actualizarReserva();
     </script>

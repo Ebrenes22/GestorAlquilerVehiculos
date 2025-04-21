@@ -16,12 +16,10 @@ namespace GestorAlquilerVehiculos.Services
         public async Task SendEmailAsync(string to, string subject, string body, bool isHtml = true)
         {
             var email = new MimeMessage();
-
             email.Sender = MailboxAddress.Parse(_emailConfig.From);
             email.From.Add(MailboxAddress.Parse(_emailConfig.From));
             email.To.Add(MailboxAddress.Parse(to));
             email.Subject = subject;
-
             var builder = new BodyBuilder();
             if (isHtml)
             {
@@ -31,11 +29,21 @@ namespace GestorAlquilerVehiculos.Services
             {
                 builder.TextBody = body;
             }
-
             email.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();
-            await smtp.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, SecureSocketOptions.StartTls);
+
+            smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+            try
+            {
+                await smtp.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, SecureSocketOptions.SslOnConnect);
+            }
+            catch (Exception)
+            {
+                await smtp.ConnectAsync(_emailConfig.SmtpServer, _emailConfig.Port, SecureSocketOptions.StartTls);
+            }
+
             await smtp.AuthenticateAsync(_emailConfig.Username, _emailConfig.Password);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
@@ -60,11 +68,6 @@ namespace GestorAlquilerVehiculos.Services
                 builder.TextBody = body;
             }
 
-            // Agrega el archivo adjunto
-            if (File.Exists(attachmentPath))
-            {
-                builder.Attachments.Add(attachmentPath);
-            }
 
             email.Body = builder.ToMessageBody();
 

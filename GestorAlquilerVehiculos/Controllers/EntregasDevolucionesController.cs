@@ -48,7 +48,16 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: EntregaDevolucions/Create
         public IActionResult Create()
         {
-            ViewData["ReservaID"] = new SelectList(_context.Reservas, "ReservaID", "Estado");
+            var reservas = _context.Reservas
+                .Include(r => r.ClienteReserva)
+                .Select(r => new
+                {
+                    Id = r.ReservaID,
+                    Nombre = r.ClienteReserva.NombreCompleto
+                })
+                .ToList();
+            ViewBag.Reservas = new SelectList(reservas, "Id", "Nombre");
+
             return View();
         }
 

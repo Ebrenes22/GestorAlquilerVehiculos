@@ -1,66 +1,106 @@
 ﻿@model IEnumerable<GestorAlquilerVehiculos.Models.EntregaDevolucion>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Gestión de Entregas y Devoluciones";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var rolUsuario = TempData["Rol"]?.ToString();
+    TempData.Keep("Rol");
 }
 
-<h1>Index</h1>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark fw-bold mb-0">Gestión de Entregas y Devoluciones</h2>
+        @if (rolUsuario == "Administrador")
+        {
+            <a asp-action="Create" class="btn btn-success">
+                <i class="fas fa-plus text-white"></i> Nueva Entrega/Devolución
+            </a>
+        }
+    </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Reserva)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoInicial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EstadoFinal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CargosAdicionales)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaEntrega)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaDevolucion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Reserva.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoInicial)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoFinal)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CargosAdicionales)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaEntrega)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaDevolucion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EntregaDevolucionID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EntregaDevolucionID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EntregaDevolucionID">Delete</a>
-            </td>
-        </tr>
+    <div class="table-responsive shadow-sm">
+        <table class="table table-bordered table-hover align-middle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Reserva</th>
+                    <th>Estado Inicial</th>
+                    <th>Estado Final</th>
+                    <th>Cargos Adicionales</th>
+                    <th>Fecha Entrega</th>
+                    <th>Fecha Devolución</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@(item.Reserva != null ? item.Reserva.Estado : "-")</td>
+                        <td>@item.EstadoInicial</td>
+                        <td>@item.EstadoFinal</td>
+                        <td>@item.CargosAdicionales.ToString("C")</td>
+                        <td>@item.FechaEntrega.ToString("g")</td>
+                        <td>@item.FechaDevolucion?.ToString("g") ?? "-"</td>
+                        <td>
+                            @if (rolUsuario == "Administrador")
+                            {
+                                <a asp-action="Edit" asp-route-id="@item.EntregaDevolucionID" class="btn btn-sm btn-warning me-1">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@item.EntregaDevolucionID" class="btn btn-sm btn-info text-white me-1">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                                <button type="button"
+                                        class="btn btn-sm btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modalEliminarEntrega"
+                                        data-id="@item.EntregaDevolucionID">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            }
+                            else
+                            {
+                                <a asp-action="Details" asp-route-id="@item.EntregaDevolucionID" class="btn btn-sm btn-info text-white">
+                                    <i class="fas fa-info-circle"></i>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEliminarEntrega" tabindex="-1" aria-labelledby="modalEliminarEntregaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="formEliminarEntrega" method="post" asp-action="DeleteConfirmed">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="modalEliminarEntregaLabel">Confirmar eliminación</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas eliminar este registro de entrega/devolución? Esta acción no se puede deshacer.
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" id="entregaIdEliminar" name="id" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var modalEliminar = document.getElementById('modalEliminarEntrega');
+        modalEliminar.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+            var id = button.getAttribute('data-id');
+            modalEliminar.querySelector('#entregaIdEliminar').value = id;
+        });
+    </script>
 }
-    </tbody>
-</table>
+    

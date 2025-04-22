@@ -1,36 +1,43 @@
-<a href="https://colorlib.com/wp/templates/">
-    <img src="https://colorlib.com/wp/wp-content/uploads/sites/2/colorlib-push-logo.png" alt="Colorlib Logo">
-</a>
+@model GestorAlquilerVehiculos.Models.DashboardViewModel
 
-<h1 style="text-align:center;">¡Gracias por usar nuestra plantilla!</h1>
+@{
+    ViewData["Title"] = "Panel de Administración";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="container mt-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Bienvenido al Panel de Administración</h1>
+        <p class="lead">Aquí puedes gestionar reservas, entregas, reportes y más.</p>
+    </div>
 
-<p style="text-align:center;">
-    Para ver más plantillas increíbles, por favor visita <strong>
-        <a href="https://colorlib.com/wp/templates/">Colorlib</a>
-    </strong>.
-</p>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-calendar-alt fa-3x mb-2 text-primary"></i>
+                    <h2>@Model.ReservasCount</h2>
+                    <p class="mb-0">Total de Reservas</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-car fa-3x mb-2 text-success"></i>
+                    <h2>@Model.VehiculosCount</h2>
+                    <p class="mb-0">Total de Vehículos</p>
+                </div>
+            </div>
+        </div>
 
-<br>
-
-<p style="text-align:center; color:red;">
-    <strong>La información de derechos de autor de esta plantilla no puede ser modificada ni eliminada a menos que adquieras una licencia.</strong>
-</p>
-
-<p style="text-align:center;">
-    <strong>Eliminar esta información sin una licencia puede resultar en la suspensión de tu servicio de hosting y/o dominio.</strong>
-</p>
-
-<p style="text-align:center;">
-    <strong>
-        Más información sobre la licencia está disponible
-        <a href="https://colorlib.com/wp/licence/">aquí</a>
-    </strong>.
-</p>
-
-<style>
-    img {
-        margin: 0 auto;
-        display: block;
-        margin-top: 20%;
-    }
-</style>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="fas fa-tools fa-3x mb-2 text-warning"></i>
+                    <h2>@Model.MantenimientosCount</h2>
+                    <p class="mb-0">Total de Mantenimientos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

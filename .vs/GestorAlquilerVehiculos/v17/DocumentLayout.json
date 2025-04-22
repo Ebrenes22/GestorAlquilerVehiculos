@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\evaluados\\proyectogestorvehiculos\\gestoralquilervehiculos\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\evaluados\\proyectogestorvehiculos\\gestoralquilervehiculos\\controllers\\entregasdevolucionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\controllers\\entregasdevolucionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\evaluados\\proyectogestorvehiculos\\gestoralquilervehiculos\\services\\notificaciondevolucionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\services\\notificaciondevolucionservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\evaluados\\proyectogestorvehiculos\\gestoralquilervehiculos\\controllers\\reservascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\controllers\\reservascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\evaluados\\proyectogestorvehiculos\\gestoralquilervehiculos\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\users\\valer\\onedrive\\desktop\\2progra\\evaluados\\proyectogestorvehiculos\\gestoralquilervehiculos\\views\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -50,7 +54,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 596,
-          "SelectedChildIndex": 11,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -86,20 +90,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "EntregasDevolucionesController.cs",
+              "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Controllers\\EntregasDevolucionesController.cs",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Controllers\\EntregasDevolucionesController.cs",
+              "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Controllers\\EntregasDevolucionesController.cs",
+              "RelativeToolTip": "GestorAlquilerVehiculos\\Controllers\\EntregasDevolucionesController.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAYwJQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T16:04:31.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\appsettings.json",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\appsettings.json",
               "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\appsettings.json",
               "RelativeToolTip": "GestorAlquilerVehiculos\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-04-22T03:59:12.655Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Views\\Pages\\Index.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Pages\\Index.cshtml",
@@ -112,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Shared\\_Layout.cshtml",
@@ -124,20 +141,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "NotificacionDevolucionService.cs",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Services\\NotificacionDevolucionService.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Services\\NotificacionDevolucionService.cs",
               "ToolTip": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Services\\NotificacionDevolucionService.cs",
               "RelativeToolTip": "GestorAlquilerVehiculos\\Services\\NotificacionDevolucionService.cs",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAowHEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-22T03:24:57.111Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ReservasController.cs",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Controllers\\ReservasController.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Controllers\\ReservasController.cs",
@@ -150,7 +167,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "IEmailService.cs",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Services\\IEmailService.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Services\\IEmailService.cs",
@@ -162,7 +179,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "EmailService.cs",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Services\\EmailService.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Services\\EmailService.cs",
@@ -174,7 +191,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Controllers\\AuthController.cs",
@@ -186,7 +203,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Program.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Program.cs",
@@ -198,7 +215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "_AdminLayout.cshtml",
               "DocumentMoniker": "C:\\Users\\valer\\OneDrive\\Desktop\\2progra\\evaluados\\ProyectoGestorVehiculos\\GestorAlquilerVehiculos\\Views\\Shared\\_AdminLayout.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Shared\\_AdminLayout.cshtml",

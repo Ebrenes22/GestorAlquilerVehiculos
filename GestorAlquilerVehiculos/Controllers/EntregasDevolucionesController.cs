@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using GestorAlquilerVehiculos.Data;
 using GestorAlquilerVehiculos.Models;
 using System.Text.Json;
+using GestorAlquilerVehiculos.Services;
 
 namespace GestorAlquilerVehiculos.Controllers
 {
     public class EntregasDevolucionesController : Controller
     {
         private readonly GestorAlquilerVehiculosDbContext _context;
+        private readonly IEmailService _emailService;
 
-        public EntregasDevolucionesController(GestorAlquilerVehiculosDbContext context)
+        public EntregasDevolucionesController(GestorAlquilerVehiculosDbContext context, IEmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         // GET: EntregaDevolucions
@@ -80,13 +83,68 @@ namespace GestorAlquilerVehiculos.Controllers
         // POST: EntregaDevolucions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ReservaID,EstadoInicial,EstadoFinal,CargosAdicionales,FechaEntrega,FechaDevolucion")]EntregaDevolucion entregaDevolucion)
+        public async Task<IActionResult> Create([Bind("ReservaID,EstadoInicial,EstadoFinal,CargosAdicionales,FechaEntrega,FechaDevolucion")] EntregaDevolucion entregaDevolucion)
         {
             ModelState.Remove("Reserva");
             if (ModelState.IsValid)
             {
                 _context.Add(entregaDevolucion);
                 await _context.SaveChangesAsync();
+
+                var reserva = await _context.Reservas
+                    .Include(r => r.ClienteReserva)
+                    .Include(r => r.Vehiculo)
+                    .FirstOrDefaultAsync(r => r.ReservaID == entregaDevolucion.ReservaID);
+
+                if (reserva?.ClienteReserva?.CorreoElectronico != null)
+                {
+                    string subject = $"Confirmación de devolución - Reserva #{reserva.ReservaID}";
+                    string body = $@"
+<html>
+<head>
+    <style>
+        body {{ font-family: Arial, sans-serif; line-height: 1.6; }}
+        .container {{ max-width: 600px; margin: 0 auto; padding: 20px; }}
+        h1 {{ color: #2d6a4f; }}
+        .details {{ margin-top: 20px; }}
+        .details p {{ margin: 5px 0; }}
+        .footer {{ margin-top: 30px; font-size: 12px; color: #666; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>¡Gracias por devolver el vehículo!</h1>
+        <p>Estimado/a {reserva.ClienteReserva.NombreCompleto},</p>
+        <p>Hemos registrado la devolución del vehículo asociado a su reserva <strong>#{reserva.ReservaID}</strong>.</p>
+
+        <div class='details'>
+            <p><strong>Vehículo:</strong> {reserva.Vehiculo.Marca} {reserva.Vehiculo.Modelo}</p>
+            <p><strong>Fecha de Entrega:</strong> {entregaDevolucion.FechaEntrega:dd/MM/yyyy}</p>
+            <p><strong>Fecha de Devolución:</strong> {entregaDevolucion.FechaDevolucion:dd/MM/yyyy}</p>
+            <p><strong>Estado Final:</strong> {entregaDevolucion.EstadoFinal}</p>
+        </div>
+
+        <p>Gracias por confiar en nuestro servicio. Esperamos verlo/a de nuevo pronto.</p>
+
+        <div class='footer'>
+            <p>Gestor de Alquiler de Vehículos</p>
+            <p>Este es un mensaje automático. No responda a este correo.</p>
+        </div>
+    </div>
+</body>
+</html>";
+
+                    try
+                    {
+                        await _emailService.SendEmailAsync(reserva.ClienteReserva.CorreoElectronico, subject, body);
+                        Console.WriteLine($"[INFO] Correo de devolución enviado a {reserva.ClienteReserva.CorreoElectronico}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"[ERROR] Falló el envío de correo: {ex.Message}");
+                    }
+                }
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -95,7 +153,7 @@ namespace GestorAlquilerVehiculos.Controllers
                 .Select(r => new {
                     Id = r.ReservaID,
                     Nombre = r.ClienteReserva.NombreCompleto,
-                    EstadoInicial = r.Estado,    
+                    EstadoInicial = r.Estado,
                     FechaEntrega = r.FechaInicio
                 })
                 .ToList();
@@ -110,6 +168,7 @@ namespace GestorAlquilerVehiculos.Controllers
 
             return View(entregaDevolucion);
         }
+
 
         #endregion
 

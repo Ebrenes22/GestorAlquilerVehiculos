@@ -37,18 +37,22 @@ public class NotificacionDevolucionService : BackgroundService
                 var emailService = scope.ServiceProvider.GetRequiredService<IEmailService>();
 
                 var mañana = DateTime.Today.AddDays(1);
+                var inicio = mañana;
+                var fin = mañana.AddDays(1);
 
-                var entregas = await context.EntregasDevoluciones
-                    .Include(e => e.Reserva)
-                        .ThenInclude(r => r.ClienteReserva)
-                    .Where(e => e.FechaDevolucion == mañana)
+                var reservasConDevolucionManana = await context.Reservas
+                    .Include(r => r.ClienteReserva)
+                    .Include(r => r.Vehiculo)
+                    .Where(r => r.FechaFin >= inicio && r.FechaFin < fin && r.Estado != "Cancelada")
                     .ToListAsync(stoppingToken);
 
                 Console.WriteLine($"[INFO] Ejecutando notificación a las {DateTime.Now}");
 
-                foreach (var entrega in entregas)
+                foreach (var reserva in reservasConDevolucionManana)
                 {
-                    var cliente = entrega.Reserva.ClienteReserva;
+                    var cliente = reserva.ClienteReserva;
+                    var vehiculo = reserva.Vehiculo;
+
                     if (!string.IsNullOrEmpty(cliente?.CorreoElectronico))
                     {
                         string subject = "Recordatorio: devolución de vehículo mañana";
@@ -68,13 +72,13 @@ public class NotificacionDevolucionService : BackgroundService
     <div class='container'>
         <h1>Recordatorio de Devolución</h1>
         <p>Estimado/a {cliente.NombreCompleto},</p>
-        <p>Le recordamos que mañana, <strong>{entrega.FechaDevolucion:dd/MM/yyyy}</strong>, vence el plazo para devolver el vehículo que reservó.</p>
+        <p>Le recordamos que mañana, <strong>{reserva.FechaFin:dd/MM/yyyy}</strong>, vence el plazo para devolver el vehículo que reservó.</p>
 
         <div class='details'>
-            <p><strong>Número de Reserva:</strong> #{entrega.ReservaID}</p>
-            <p><strong>Vehículo:</strong> {entrega.Reserva.Vehiculo?.Marca} {entrega.Reserva.Vehiculo?.Modelo}</p>
-            <p><strong>Fecha de Entrega:</strong> {entrega.FechaEntrega:dd/MM/yyyy}</p>
-            <p><strong>Fecha de Devolución:</strong> {entrega.FechaDevolucion:dd/MM/yyyy}</p>
+            <p><strong>Número de Reserva:</strong> #{reserva.ReservaID}</p>
+            <p><strong>Vehículo:</strong> {vehiculo.Marca} {vehiculo.Modelo}</p>
+            <p><strong>Fecha de Inicio:</strong> {reserva.FechaInicio:dd/MM/yyyy}</p>
+            <p><strong>Fecha de Devolución:</strong> {reserva.FechaFin:dd/MM/yyyy}</p>
         </div>
 
         <p>Por favor, asegúrese de devolver el vehículo a tiempo para evitar cargos adicionales.</p>
@@ -89,13 +93,21 @@ public class NotificacionDevolucionService : BackgroundService
 </body>
 </html>";
 
-                        await emailService.SendEmailAsync(cliente.CorreoElectronico, subject, body);
+                        try
+                        {
+                            await emailService.SendEmailAsync(cliente.CorreoElectronico, subject, body);
+                            Console.WriteLine($"[INFO] Correo enviado a {cliente.CorreoElectronico}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"[ERROR] No se pudo enviar el correo: {ex.Message}");
+                        }
                     }
                 }
             }
 
-            //await Task.Delay(TimeSpan.FromDays(1), stoppingToken);
             await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
         }
     }
+
 }

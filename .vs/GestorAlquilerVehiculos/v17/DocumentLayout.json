@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\ReposGit\\GestorAlquilerVehiculos\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\reposgit\\gestoralquilervehiculos\\gestoralquilervehiculos\\views\\auth\\cambiarcontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\views\\auth\\cambiarcontrasena.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\reposgit\\gestoralquilervehiculos\\gestoralquilervehiculos\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\views\\auth\\login.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|c:\\reposgit\\gestoralquilervehiculos\\gestoralquilervehiculos\\views\\entregasdevoluciones\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5F45694C-E29D-478B-8F42-8EBF00E631D1}|GestorAlquilerVehiculos\\GestorAlquilerVehiculos.csproj|solutionrelative:gestoralquilervehiculos\\views\\entregasdevoluciones\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -63,6 +71,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CambiarContrasena.cshtml",
+              "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Auth\\CambiarContrasena.cshtml",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Auth\\CambiarContrasena.cshtml",
+              "ToolTip": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Auth\\CambiarContrasena.cshtml",
+              "RelativeToolTip": "GestorAlquilerVehiculos\\Views\\Auth\\CambiarContrasena.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T23:30:13.747Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Login.cshtml",
+              "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Auth\\Login.cshtml",
+              "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Auth\\Login.cshtml",
+              "ToolTip": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Auth\\Login.cshtml",
+              "RelativeToolTip": "GestorAlquilerVehiculos\\Views\\Auth\\Login.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T23:30:02.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\EntregasDevoluciones\\Create.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\EntregasDevoluciones\\Create.cshtml",
@@ -75,7 +109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\appsettings.json",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\appsettings.json",
@@ -88,7 +122,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Program.cs",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Program.cs",
@@ -100,7 +134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Shared\\_Layout.cshtml",
@@ -112,7 +146,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\ReposGit\\GestorAlquilerVehiculos\\GestorAlquilerVehiculos\\Views\\Pages\\Index.cshtml",
               "RelativeDocumentMoniker": "GestorAlquilerVehiculos\\Views\\Pages\\Index.cshtml",

@@ -22,6 +22,7 @@ builder.Services.AddDbContext<GestorAlquilerVehiculosDbContext>(options =>
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<EmailConfiguration>>().Value);
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddHostedService<NotificacionDevolucionService>();
 
 var app = builder.Build();
 

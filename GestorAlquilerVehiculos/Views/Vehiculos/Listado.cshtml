@@ -35,8 +35,7 @@
                                     <p class="price ml-auto">₡@item.PrecioPorDia <span>/día</span></p>
                                 </div>
                                 <p class="d-flex mb-0 d-block">
-                                    <a href="#" class="btn btn-primary py-2 mr-1">Reservar</a>
-
+                                    <a asp-controller="ClienteReservas" asp-action="Create" class="btn btn-primary py-2 mr-1">Reservar</a>
                                     <a asp-action="DetailsVehiculo" asp-route-id="@item.VehiculoID" class="btn btn-secondary py-2 ml-1">Detalles</a>
 
                                 </p>

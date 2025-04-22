@@ -22,7 +22,7 @@
         <table class="table table-bordered table-hover align-middle text-center">
             <thead class="table-dark">
                 <tr>
-                    <th>Reserva</th>
+                    <th>Cliente</th>
                     <th>Estado Inicial</th>
                     <th>Estado Final</th>
                     <th>Cargos Adicionales</th>
@@ -35,12 +35,14 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@(item.Reserva != null ? item.Reserva.Estado : "-")</td>
+                        <td>
+                            @(item.Reserva?.ClienteReserva?.NombreCompleto ?? "-")
+                        </td>
                         <td>@item.EstadoInicial</td>
                         <td>@item.EstadoFinal</td>
                         <td>@item.CargosAdicionales.ToString("C")</td>
                         <td>@item.FechaEntrega.ToString("g")</td>
-                        <td>@item.FechaDevolucion?.ToString("g") ?? "-"</td>
+                        <td>@item.FechaDevolucion?.ToString("g") </td>
                         <td>
                             @if (rolUsuario == "Administrador")
                             {

@@ -1,17 +1,28 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
+using GestorAlquilerVehiculos.Data;
 using GestorAlquilerVehiculos.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+
 
 namespace GestorAlquilerVehiculos.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly GestorAlquilerVehiculosDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(
+            ILogger<HomeController> logger,
+            GestorAlquilerVehiculosDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
+
 
         public IActionResult Index()
         {
@@ -48,9 +59,15 @@ namespace GestorAlquilerVehiculos.Controllers
             return View("~/Views/Pages/Contact.cshtml");
         }
 
-        public IActionResult Main()
+        public async Task<IActionResult> Main()
         {
-            return View("~/Views/Pages/Main.cshtml");
+            var vm = new DashboardViewModel
+            {
+                ReservasCount = await _context.Reservas.CountAsync(),
+                VehiculosCount = await _context.Vehiculos.CountAsync(),
+                MantenimientosCount = await _context.Mantenimientos.CountAsync()
+            };
+            return View("~/Views/Pages/Main.cshtml", vm);
         }
 
         public IActionResult Pricing()

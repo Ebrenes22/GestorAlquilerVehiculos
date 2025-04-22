@@ -40,10 +40,10 @@ namespace GestorAlquilerVehiculos.Controllers
             {
                 TempData["Rol"] = usuario.Rol;
                 TempData["Nombre"] = usuario.NombreCompleto;
-                TempData["Success"] = $"Bienvenido, {usuario.NombreCompleto}";
+                HttpContext.Session.SetString("NombreCompleto", usuario.NombreCompleto);
                 TempData.Keep();
 
-                return RedirectToAction("Index", "Usuarios"); // Redirige al panel de usuarios
+                return RedirectToAction("Main", "Home"); // Redirige al panel de usuarios
             }
 
             ViewBag.Error = "Correo o contraseña incorrectos.";
@@ -80,7 +80,7 @@ namespace GestorAlquilerVehiculos.Controllers
         public IActionResult Logout()
         {
             TempData.Clear(); // Limpiar toda la sesión simulada
-            return Redirect("https://localhost:7252/");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

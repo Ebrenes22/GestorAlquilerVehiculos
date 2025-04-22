@@ -1,55 +1,47 @@
 ﻿@model GestorAlquilerVehiculos.Models.EntregaDevolucion
 
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Detalles de Entrega/Devolución";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Details</h1>
+<h1>Detalles de Entrega/Devolución</h1>
+<hr />
 
-<div>
-    <h4>EntregaDevolucion</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Reserva)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Reserva.Estado)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstadoInicial)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstadoInicial)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EstadoFinal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EstadoFinal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CargosAdicionales)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CargosAdicionales)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaEntrega)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaEntrega)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaDevolucion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaDevolucion)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.EntregaDevolucionID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<dl class="row">
+    <dt class="col-sm-2">Cliente</dt>
+    <dd class="col-sm-10">
+        @Model.Reserva?.ClienteReserva?.NombreCompleto
+    </dd>
+
+    <dt class="col-sm-2">Vehículo</dt>
+    <dd class="col-sm-10">
+        @(Model.Reserva != null
+            ? $"{Model.Reserva.Vehiculo.Marca} {Model.Reserva.Vehiculo.Modelo}"
+            : "-")
+    </dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.EstadoInicial)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.EstadoInicial)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.EstadoFinal)</dt>
+    <dd class="col-sm-10">@Html.DisplayFor(m => m.EstadoFinal)</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.CargosAdicionales)</dt>
+    <dd class="col-sm-10">@Model.CargosAdicionales.ToString("C")</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.FechaEntrega)</dt>
+    <dd class="col-sm-10">@Model.FechaEntrega.ToString("g")</dd>
+
+    <dt class="col-sm-2">@Html.DisplayNameFor(m => m.FechaDevolucion)</dt>
+    <dd class="col-sm-10">
+        @Model.FechaDevolucion?.ToString("g")
+    </dd>
+</dl>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.EntregaDevolucionID" class="btn btn-sm btn-warning">
+        <i class="fas fa-edit"></i> Editar
+    </a>
+    <a asp-action="Index" class="btn btn-sm btn-link">Volver al Listado</a>
 </div>

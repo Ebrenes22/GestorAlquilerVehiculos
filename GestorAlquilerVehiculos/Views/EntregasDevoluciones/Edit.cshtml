@@ -1,60 +1,183 @@
 ﻿@model GestorAlquilerVehiculos.Models.EntregaDevolucion
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Editar Entrega/Devolución";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>EntregaDevolucion</h4>
+<h1>Editar Entrega/Devolución</h1>
 <hr />
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form asp-action="Edit">
+            @* Hidden PK *@
+            <input asp-for="EntregaDevolucionID" type="hidden" />
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="EntregaDevolucionID" />
-            <div class="form-group">
-                <label asp-for="ReservaID" class="control-label"></label>
-                <select asp-for="ReservaID" class="form-control" asp-items="ViewBag.ReservaID"></select>
+
+            <div class="mb-3">
+                <label asp-for="ReservaID" class="form-label">Reserva del Cliente</label>
+                <select asp-for="ReservaID"
+                        id="reservaSelect"
+                        class="form-control"
+                        asp-items="ViewBag.Reservas">
+                    <option value="">-- Seleccione Reserva --</option>
+                </select>
                 <span asp-validation-for="ReservaID" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstadoInicial" class="control-label"></label>
-                <input asp-for="EstadoInicial" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="EstadoInicial" class="form-label">Estado Inicial</label>
+                <select asp-for="EstadoInicial"
+                        id="estadoInicialSelect"
+                        class="form-control"
+                        asp-items="ViewBag.EstadoInicialList">
+                    <option value="">-- Seleccione Estado Inicial --</option>
+                </select>
                 <span asp-validation-for="EstadoInicial" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstadoFinal" class="control-label"></label>
-                <input asp-for="EstadoFinal" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="EstadoFinal" class="form-label">Estado al Entregar</label>
+                <select asp-for="EstadoFinal"
+                        id="estadoFinalSelect"
+                        class="form-control">
+                    <option value="Conforme">Conforme</option>
+                    <option value="Con Cargos Adicionales">Con Cargos Adicionales</option>
+                </select>
                 <span asp-validation-for="EstadoFinal" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CargosAdicionales" class="control-label"></label>
-                <input asp-for="CargosAdicionales" class="form-control" />
+
+            <div class="mb-3">
+                <label class="form-label">Cargos Adicionales</label>
+                <div class="input-group">
+                    <input asp-for="CargosAdicionales"
+                           id="cargosAdicionalesInput"
+                           type="number"
+                           step="0.01"
+                           inputmode="decimal"
+                           class="form-control"
+                           readonly />
+                    <button type="button"
+                            id="btnAgregarCargo"
+                            class="btn btn-outline-secondary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#modalCargo"
+                            disabled>
+                        Añadir Cargo
+                    </button>
+                </div>
                 <span asp-validation-for="CargosAdicionales" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaEntrega" class="control-label"></label>
-                <input asp-for="FechaEntrega" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="FechaEntrega" class="form-label">Fecha Entrega</label>
+                <input asp-for="FechaEntrega"
+                       id="fechaEntregaInput"
+                       type="datetime-local"
+                       class="form-control"
+                       readonly />
                 <span asp-validation-for="FechaEntrega" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaDevolucion" class="control-label"></label>
-                <input asp-for="FechaDevolucion" class="form-control" />
+
+            <div class="mb-3">
+                <label asp-for="FechaDevolucion" class="form-label">Fecha Devolución</label>
+                <input asp-for="FechaDevolucion"
+                       type="datetime-local"
+                       class="form-control" />
                 <span asp-validation-for="FechaDevolucion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-link">Cancelar</a>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+
+<div class="modal fade" id="modalCargo" tabindex="-1" aria-labelledby="modalCargoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCargoLabel">Agregar Cargo Adicional</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="inputMontoCargo" class="form-label">Monto (colones)</label>
+                    <input type="number"
+                           class="form-control"
+                           id="inputMontoCargo"
+                           min="0"
+                           step="0.01"
+                           placeholder="0.00" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="guardarCargoBtn">Guardar Cargo</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+ 
+        var reservasData = {};
+        (function() {
+            var list = @Html.Raw(ViewBag.ReservasJson);
+            list.forEach(function(r) {
+                reservasData[r.Id] = {
+                    EstadoInicial: r.EstadoInicial,
+                    FechaEntrega:  r.FechaEntrega
+                };
+            });
+        })();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var reservaSelect       = document.getElementById('reservaSelect');
+            var estadoInicialSelect = document.getElementById('estadoInicialSelect');
+            var fechaEntregaInput   = document.getElementById('fechaEntregaInput');
+            var estadoFinalSelect   = document.getElementById('estadoFinalSelect');
+            var btnAgregarCargo     = document.getElementById('btnAgregarCargo');
+            var inputCargo          = document.getElementById('cargosAdicionalesInput');
+            var guardarCargoBtn     = document.getElementById('guardarCargoBtn');
+            var inputMontoCargo     = document.getElementById('inputMontoCargo');
+
+            inputCargo.value = '0.00';
+
+            reservaSelect.addEventListener('change', function() {
+                var id = this.value;
+                if (reservasData[id]) {
+                    estadoInicialSelect.value = reservasData[id].EstadoInicial;
+                    var dt = new Date(reservasData[id].FechaEntrega);
+                    fechaEntregaInput.value = dt.toISOString().slice(0,16);
+                } else {
+                    estadoInicialSelect.value = '';
+                    fechaEntregaInput.value   = '';
+                }
+            });
+
+            estadoFinalSelect.addEventListener('change', function() {
+                if (this.value === 'Con Cargos Adicionales') {
+                    btnAgregarCargo.removeAttribute('disabled');
+                } else {
+                    btnAgregarCargo.setAttribute('disabled', true);
+                    inputCargo.value = '0.00';
+                }
+            });
+
+            guardarCargoBtn.addEventListener('click', function() {
+                var monto = parseFloat(inputMontoCargo.value) || 0;
+                inputCargo.value = monto.toFixed(2);
+                bootstrap.Modal.getInstance(document.getElementById('modalCargo')).hide();
+            });
+        });
+    </script>
 }

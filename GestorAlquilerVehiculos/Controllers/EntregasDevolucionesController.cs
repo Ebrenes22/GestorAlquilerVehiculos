@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GestorAlquilerVehiculos.Data;
 using GestorAlquilerVehiculos.Models;
+using System.Text.Json;
 
 namespace GestorAlquilerVehiculos.Controllers
 {
@@ -22,90 +23,143 @@ namespace GestorAlquilerVehiculos.Controllers
         // GET: EntregaDevolucions
         public async Task<IActionResult> Index()
         {
-            var gestorAlquilerVehiculosDbContext = _context.EntregasDevoluciones.Include(e => e.Reserva);
-            return View(await gestorAlquilerVehiculosDbContext.ToListAsync());
+            var entregas = await _context.EntregasDevoluciones
+                .Include(e => e.Reserva)
+                    .ThenInclude(r => r.ClienteReserva)
+                .ToListAsync();
+            return View(entregas);
         }
+
 
         // GET: EntregaDevolucions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
             var entregaDevolucion = await _context.EntregasDevoluciones
                 .Include(e => e.Reserva)
+                    .ThenInclude(r => r.ClienteReserva)
+                .Include(e => e.Reserva)
+                    .ThenInclude(r => r.Vehiculo)
                 .FirstOrDefaultAsync(m => m.EntregaDevolucionID == id);
+
             if (entregaDevolucion == null)
-            {
                 return NotFound();
-            }
 
             return View(entregaDevolucion);
         }
 
+        #region CREATE ENTREGAS/DEVOLUCIONES
         // GET: EntregaDevolucions/Create
         public IActionResult Create()
         {
+ 
             var reservas = _context.Reservas
                 .Include(r => r.ClienteReserva)
-                .Select(r => new
-                {
+                .Select(r => new {
                     Id = r.ReservaID,
-                    Nombre = r.ClienteReserva.NombreCompleto
+                    Nombre = r.ClienteReserva.NombreCompleto,
+                    EstadoInicial = r.Estado,        // <— aquí
+                    FechaEntrega = r.FechaInicio
                 })
                 .ToList();
+
             ViewBag.Reservas = new SelectList(reservas, "Id", "Nombre");
+            ViewBag.ReservasJson = JsonSerializer.Serialize(reservas);
+
+            var estados = new[] { "Pendiente", "Confirmada", "Cancelada", "Finalizada" };
+            ViewBag.EstadoInicialList =
+                estados.Select(e => new SelectListItem(e, e))
+                       .ToList();
 
             return View();
         }
 
+
         // POST: EntregaDevolucions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EntregaDevolucionID,ReservaID,EstadoInicial,EstadoFinal,CargosAdicionales,FechaEntrega,FechaDevolucion")] EntregaDevolucion entregaDevolucion)
+        public async Task<IActionResult> Create([Bind("ReservaID,EstadoInicial,EstadoFinal,CargosAdicionales,FechaEntrega,FechaDevolucion")]EntregaDevolucion entregaDevolucion)
         {
+            ModelState.Remove("Reserva");
             if (ModelState.IsValid)
             {
                 _context.Add(entregaDevolucion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReservaID"] = new SelectList(_context.Reservas, "ReservaID", "Estado", entregaDevolucion.ReservaID);
+
+            var reservas = _context.Reservas
+                .Include(r => r.ClienteReserva)
+                .Select(r => new {
+                    Id = r.ReservaID,
+                    Nombre = r.ClienteReserva.NombreCompleto,
+                    EstadoInicial = r.Estado,    
+                    FechaEntrega = r.FechaInicio
+                })
+                .ToList();
+
+            ViewBag.Reservas = new SelectList(reservas, "Id", "Nombre", entregaDevolucion.ReservaID);
+            ViewBag.ReservasJson = JsonSerializer.Serialize(reservas);
+
+            var estados = new[] { "Pendiente", "Confirmada", "Cancelada", "Finalizada" };
+            ViewBag.EstadoInicialList =
+                estados.Select(e => new SelectListItem(e, e, e == entregaDevolucion.EstadoInicial))
+                       .ToList();
+
             return View(entregaDevolucion);
         }
 
+        #endregion
+
+
+        #region EDIT ENTREGAS/DEVOLUCIONES
         // GET: EntregaDevolucions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var entregaDevolucion = await _context.EntregasDevoluciones.FindAsync(id);
-            if (entregaDevolucion == null)
-            {
-                return NotFound();
-            }
-            ViewData["ReservaID"] = new SelectList(_context.Reservas, "ReservaID", "Estado", entregaDevolucion.ReservaID);
-            return View(entregaDevolucion);
+            // Cargo la entidad con la Reserva y Cliente
+            var entrega = await _context.EntregasDevoluciones
+                .Include(e => e.Reserva)
+                    .ThenInclude(r => r.ClienteReserva)
+                .FirstOrDefaultAsync(e => e.EntregaDevolucionID == id);
+
+            if (entrega == null) return NotFound();
+
+            // Lista de reservas con Nombre, EstadoInicial y FechaEntrega
+            var reservas = _context.Reservas
+                .Include(r => r.ClienteReserva)
+                .Select(r => new {
+                    Id = r.ReservaID,
+                    Nombre = r.ClienteReserva.NombreCompleto,
+                    EstadoInicial = r.Estado,
+                    FechaEntrega = r.FechaInicio
+                })
+                .ToList();
+
+            ViewBag.Reservas = new SelectList(reservas, "Id", "Nombre", entrega.ReservaID);
+            ViewBag.ReservasJson = JsonSerializer.Serialize(reservas);
+
+            // Opciones de EstadoInicial
+            var estados = new[] { "Pendiente", "Confirmada", "Cancelada", "Finalizada" };
+            ViewBag.EstadoInicialList =
+                estados.Select(e => new SelectListItem(e, e, e == entrega.EstadoInicial))
+                       .ToList();
+
+            return View(entrega);
         }
 
         // POST: EntregaDevolucions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EntregaDevolucionID,ReservaID,EstadoInicial,EstadoFinal,CargosAdicionales,FechaEntrega,FechaDevolucion")] EntregaDevolucion entregaDevolucion)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("EntregaDevolucionID,ReservaID,EstadoInicial,EstadoFinal,CargosAdicionales,FechaEntrega,FechaDevolucion")]
+        EntregaDevolucion entregaDevolucion)
         {
             if (id != entregaDevolucion.EntregaDevolucionID)
-            {
                 return NotFound();
-            }
 
             if (ModelState.IsValid)
             {
@@ -117,41 +171,37 @@ namespace GestorAlquilerVehiculos.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!EntregaDevolucionExists(entregaDevolucion.EntregaDevolucionID))
-                    {
                         return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReservaID"] = new SelectList(_context.Reservas, "ReservaID", "Estado", entregaDevolucion.ReservaID);
+
+
+            var reservas = _context.Reservas
+                .Include(r => r.ClienteReserva)
+                .Select(r => new {
+                    Id = r.ReservaID,
+                    Nombre = r.ClienteReserva.NombreCompleto,
+                    EstadoInicial = r.Estado,
+                    FechaEntrega = r.FechaInicio
+                })
+                .ToList();
+            ViewBag.Reservas = new SelectList(reservas, "Id", "Nombre", entregaDevolucion.ReservaID);
+            ViewBag.ReservasJson = JsonSerializer.Serialize(reservas);
+
+            var estados = new[] { "Pendiente", "Confirmada", "Cancelada", "Finalizada" };
+            ViewBag.EstadoInicialList =
+                estados.Select(e => new SelectListItem(e, e, e == entregaDevolucion.EstadoInicial))
+                       .ToList();
+
             return View(entregaDevolucion);
         }
 
-        // GET: EntregaDevolucions/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        #endregion
 
-            var entregaDevolucion = await _context.EntregasDevoluciones
-                .Include(e => e.Reserva)
-                .FirstOrDefaultAsync(m => m.EntregaDevolucionID == id);
-            if (entregaDevolucion == null)
-            {
-                return NotFound();
-            }
-
-            return View(entregaDevolucion);
-        }
-
-        // POST: EntregaDevolucions/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: EntregaDevolucions/DeleteConfirmed/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -159,11 +209,11 @@ namespace GestorAlquilerVehiculos.Controllers
             if (entregaDevolucion != null)
             {
                 _context.EntregasDevoluciones.Remove(entregaDevolucion);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool EntregaDevolucionExists(int id)
         {
